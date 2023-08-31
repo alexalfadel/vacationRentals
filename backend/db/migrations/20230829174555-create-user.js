@@ -26,6 +26,12 @@ module.exports = {
         allowNull: false,
         unique: true
       },
+      firstName: {
+        type: Sequelize.STRING
+      },
+      lastName: {
+        type: Sequelize.STRING
+      },
       email: {
         type: Sequelize.STRING(256),
         allowNull: false,
@@ -45,11 +51,15 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    });
-    await queryInterface.addIndex("Users", ["username"]);
-    await queryInterface.addIndex("Users", ["email"]);
+    }, options);
+    options.tableName = 'Users'
+    await queryInterface.addIndex(options, ["username"]);
+    await queryInterface.addIndex(options, ["email"]);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    options.tableName = 'Users'
+    await queryInterface.removeIndex(options, ['username']);
+    await queryInterface.removeIndex(options, ['email']);
+    await queryInterface.dropTable(options);
   }
 };
