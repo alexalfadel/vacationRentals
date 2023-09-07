@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 
-const { Booking } = require('../models');
+const { Review } = require('../models');
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
@@ -20,31 +20,25 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await Booking.bulkCreate([
+   await Review.bulkCreate([
     {
-      spotId: 1,
-      userId: 2,
-      startDate: "2023-11-05",
-      endDate: "2023-11-12",
-    },
-    {
+      userId: 1,
       spotId: 2,
-      userId: 1,
-      startDate: "2023-12-04",
-      endDate: "2023-12-10",
+      review: 'Super great stay, will come again!',
+      stars: 5
     },
     {
-      spotId: 3,
       userId: 2,
-      startDate: "2023-10-04",
-      endDate: "2023-10-09",
+      spotId: 1,
+      review: 'Horrible! There were rats everywhere!',
+      stars: 1
     },
     {
+      userId: 2,
       spotId: 3,
-      userId: 1,
-      startDate: "2023-10-10",
-      endDate: "2023-10-15",
-    },
+      review: 'Decent stay, might come again',
+      stars: 3
+    }
    ], { validate: true })
   },
 
@@ -55,10 +49,10 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    options.tableName = 'Bookings';
+    options.tableName = 'Reviews';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      userId: { [Op.in]: [1, 2, 3] }
-    }, {});
+      spotId: { [Op.in]: [1, 2, 3]}
+    }, {})
   }
 };
