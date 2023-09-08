@@ -1,15 +1,14 @@
 'use strict';
 
-const { User } = require('../models');
-const bcrypt = require("bcryptjs");
+/** @type {import('sequelize-cli').Migration} */
+
+const { Booking } = require('../models');
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA
 }
 
-
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     /**
@@ -21,22 +20,31 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await User.bulkCreate([ 
+   await Booking.bulkCreate([
     {
-      email: 'demo@user.io',
-      username: 'Demo-lition',
-      hashedPassword: bcrypt.hashSync('password')
+      spotId: 1,
+      userId: 2,
+      startDate: "2023-11-05",
+      endDate: "2023-11-12",
     },
     {
-      email: 'user1@user.io',
-      username: 'FakeUser1',
-      hashedPassword: bcrypt.hashSync('password2')
+      spotId: 2,
+      userId: 1,
+      startDate: "2023-12-04",
+      endDate: "2023-12-10",
     },
     {
-      email: 'user2@user.io',
-      username: 'FakeUser2',
-      hashedPassword: bcrypt.hashSync('password3')
-    }
+      spotId: 3,
+      userId: 2,
+      startDate: "2023-10-04",
+      endDate: "2023-10-09",
+    },
+    {
+      spotId: 3,
+      userId: 1,
+      startDate: "2023-10-10",
+      endDate: "2023-10-15",
+    },
    ], { validate: true })
   },
 
@@ -47,10 +55,10 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    options.tableName = 'Users';
+    options.tableName = 'Bookings';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2']}
-    }, {} );
+      userId: { [Op.in]: [1, 2, 3] }
+    }, {});
   }
 };
