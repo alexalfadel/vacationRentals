@@ -3,6 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 
 let options = {};
+options.tableName = 'Spots'
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA
 }
@@ -15,11 +16,9 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.addColumn('Spots', 'description', {
+    await queryInterface.addColumn(options, 'description', {
       type: Sequelize.STRING,
-      allowNull: false }, options)
-      options.tableName = 'Spots'
-      options.columnName = 'description'
+      allowNull: false })
   },
 
   async down (queryInterface, Sequelize) {
@@ -29,9 +28,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-
-    options.tableName = 'Spots'
-    options.columnName = 'description'
-    await queryInterface.removeColumn(options.tableName, options.columnName)
+    await queryInterface.removeColumn(options, 'description')
   }
 };
