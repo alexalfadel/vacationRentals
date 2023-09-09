@@ -31,6 +31,7 @@ module.exports = {
       lat: 45.32,
       lng: 112.96,
       name: 'Relaxing lakehouse',
+      description: 'Cozy cabin by the lake, just 10 minutes away from downtown',
       price: 157,
     },
     {
@@ -42,6 +43,7 @@ module.exports = {
       lat: 67.22,
       lng: 164.26,
       name: 'Scenic Cabin on the River',
+      description: 'Cabin on the river, perfect for rafting',
       price: 253,
     },
     {
@@ -53,6 +55,7 @@ module.exports = {
       lat: 82.29,
       lng: 114.98,
       name: 'City Condo right by Downtown',
+      description: 'Upscale condo in NYC, perfect for a weekend trip',
       price: 350,
     }
    ], { validate: true })
