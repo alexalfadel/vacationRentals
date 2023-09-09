@@ -85,6 +85,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true
     },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [15, 256]
+      }
+    },
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
