@@ -74,6 +74,68 @@ router.get('/', async (req, res) => {
 
 })
 
+router.post('/:spotId/images', requireAuth, async (req, res,) => {
+    const { url, preview } = req.body;
+
+
+    console.log(req.user.id, '!!!! REQ.USER')
+
+    const spot = await Spot.findAll( {
+        where: {
+            id: req.params.spotId
+        }
+    })
+
+    console.log(spot)
+
+    if (!spot.length) {
+        // const err = new Error("Unauthorized");
+        // err.status = 403;
+        // err.message = "You must own the spot to add an image";
+        // next(err)
+        const err = new Error("Spot doesn't exist");
+            err.message = "Spot couldn't be found";
+            err.status = 404;
+            throw err
+    }
+
+    console.log(spot[0].dataValues.ownerId, '!!!ownerId');
+    console.log(req.user.id, '!!! user id')
+
+    if (spot[0].dataValues.ownerId !== req.user.id) {
+        const err = new Error("Unauthorized");
+        err.status = 403;
+        err.message = "You must own the spot to add an image"
+        throw err
+    }
+
+    // try {
+        // if (req.params.spotId){
+            const newSpotImage = await SpotImage.create({
+                url: url,
+                preview: preview,
+                spotId: req.params.spotId
+            })
+
+            return res.status(200).json({
+                id: newSpotImage.id,
+                url: newSpotImage.url,
+                preview: newSpotImage.preview
+            }) 
+        // } else {
+            // const err = new Error("Spot doesn't exist");
+            // err.message = "Spot couldn't be found";
+            // err.status = 404;
+            // throw err
+        // }
+    // } catch (err) {
+
+        // res.status(404).json({
+            // message: "Spot couldn't be found"
+        // })
+    // } 
+})
+
 router.post('/', requireAuth, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price} = req.body;
     const { user } = req;
