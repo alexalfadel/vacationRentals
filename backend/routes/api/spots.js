@@ -1,6 +1,6 @@
 const express = require('express');
 const { Spot } = require('../../db/models');
-const { Review, SpotImage } = require('../../db/models')
+const { Review, SpotImage, User } = require('../../db/models')
 const { requireAuth } = require('../../utils/auth')
 const router = express.Router();
 
@@ -78,6 +78,72 @@ router.get('/current', requireAuth, async (req, res) => {
 
     return res.status(200).json(allUserSpotsRes);
 
+})
+
+router.get('/:spotId', async (req, res) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    const refinedSpot = spot.dataValues;
+
+
+    const spotReviews = await Review.findAll({
+        where: {
+            spotId: spot.dataValues.id
+        }
+    })
+
+    const numReviews = spotReviews.length
+
+    let total = 0;
+
+    spotReviews.forEach(review => {
+        total += review.dataValues.stars
+    })
+
+    const avgRating = total / spotReviews.length;
+
+    const spotRes = {
+        ...refinedSpot,
+        numReviews: numReviews,
+        avgStarRating: avgRating,
+        SpotImages: []
+    }
+
+    const spotImages = await SpotImage.findAll({
+        where : {
+            spotId: spot.dataValues.id,
+        }
+     })
+
+     for (let i = 0; i < spotImages.length; i++) {
+        let currImg = spotImages[i];
+        let imgObj = {
+            id: currImg.id,
+            url: currImg.url,
+            preview: currImg.preview
+        }
+
+        spotRes.SpotImages.push(imgObj)
+     }
+
+     const owner = await User.findByPk(spot.dataValues.ownerId)
+
+     const refinedOwner = owner.dataValues;
+
+     spotRes.Owner = {
+        id: refinedOwner.id,
+        firstName: refinedOwner.firstName,
+        lastName: refinedOwner.lastName
+     }
+     
+     
+    return res.json(spotRes)
 })
 
 router.get('/', async (req, res) => {
