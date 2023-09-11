@@ -69,12 +69,32 @@ app.use((err, _req, _res, next) => {
         // err.title = 'Validation error';
         err.errors = errors;
     }
+
+    
     next(err);
 })
 
 app.use((err, _req, res, _next) => {
     res.status(err.status || 500);
     console.error(err);
+
+    //log-in errors
+    if (err.title === 'Login failed') {
+        if (!isProduction) {
+            res.json({
+                title: err.title,
+                message: err.message,
+                errors: err.errors,
+                stack: err.stack
+            })
+        } else {
+            res.json({
+                message: err.message
+            })
+        }
+    }
+
+    //sign-up errors
     if (!isProduction) {
         // if (err.errors)
         res.json({
