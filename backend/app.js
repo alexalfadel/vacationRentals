@@ -109,6 +109,11 @@ app.use((err, _req, _res, next) => {
                 err.message = 'Bad Request'
             }
 
+            if (error.message === 'Validation len on name failed') {
+                error.message = 'Name must be less than 50 characters';
+                err.message = 'Bad Request'
+            }
+
             
             errors[error.path] = error.message
         }
