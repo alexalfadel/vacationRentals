@@ -249,6 +249,46 @@ router.post('/:spotId/images', requireAuth, async (req, res,) => {
     }) 
 })
 
+router.put('/:spotId', requireAuth, async (req, res) => {
+    const userId = req.user.id;
+
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    const refinedSpot = spot.dataValues;
+
+    if (userId !== refinedSpot.ownerId) {
+        return res.status(401).json({
+            message: "You must own the spot to make an edit"
+        })
+    }
+
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
+    await spot.set({
+        address: address,
+        city: city,
+        state: state,
+        country: country,
+        lat: lat,
+        lng: lng,
+        name: name,
+        description: description,
+        price: price
+    })
+
+    await spot.save();
+
+    const editedSpot = await Spot.findByPk(req.params.spotId);
+
+    return res.status(200).json(editedSpot)
+})
+
 router.post('/', requireAuth, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price} = req.body;
     const { user } = req;
