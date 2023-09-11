@@ -1,6 +1,6 @@
 const express = require('express');
 const { Spot } = require('../../db/models');
-const { Review } = require('../../db/models')
+const { Review, SpotImage } = require('../../db/models')
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -30,6 +30,22 @@ router.get('/', async (req, res) => {
 
         const avgRating = total / reviews.length;
 
+        const spotPreviewImage = await SpotImage.findAll({
+            where : {
+                spotId: spot.id,
+                preview: true
+            }
+        })
+
+        let imageUrl;
+
+        if (spotPreviewImage[0]) {
+                // console.log('IT EXISTS!!!!!')
+            imageUrl = spotPreviewImage[0].dataValues.url;
+        } else imageUrl = 'none'
+
+        console.log(spotPreviewImage[0])
+
         //creating each spot object
         const spotObj = {
             id: spot.id,
@@ -46,7 +62,7 @@ router.get('/', async (req, res) => {
             createdAt: spot.createdAt,
             updatedAt: spot.updatedAt,
             avgRating: avgRating,
-            previewImage: spot.previewImage
+            previewImage: imageUrl
         };
 
         //adding each spot object to the array of spot objects
