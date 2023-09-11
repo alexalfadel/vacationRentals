@@ -130,6 +130,25 @@ app.use((err, _req, _res, next) => {
                 err.status = 400
             }
 
+            //spotimage errors
+            if (error.message === 'url must be unique') {
+                error.message = 'Url belongs to another Spot Image';
+                err.message = 'Bad Request';
+                err.status = 400
+            }
+
+            if (error.message === 'SpotImage.preview cannot be null') {
+                error.message = 'Preview required';
+                err.message = 'Bad Reqeust';
+                err.status = 400
+            }
+
+            if (error.message === 'SpotImage.url cannot be null') {
+                error.message = 'Image Url required';
+                err.message = 'Bad Request';
+                err.status = 400;
+            }
+
             
 
             
