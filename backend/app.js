@@ -114,6 +114,13 @@ app.use((err, _req, _res, next) => {
                 err.message = 'Bad Request'
             }
 
+            if (error.message === 'name must be unique') {
+                error.message = 'Name is already taken'
+                err.message = 'Bad Request'
+            }
+
+            
+
             
             errors[error.path] = error.message
         }
