@@ -63,6 +63,24 @@ app.use((err, _req, _res, next) => {
                 error.message = "User with that username already exists";
                 err.message = "User already exists";
             }
+
+            if (error.message === 'Validation isAlpha on firstName failed') {
+                error.message = "First name can only be letters";
+                err.message = "Bad Request";
+                err.status = 400
+            }
+
+            if (error.message === 'Validation isAlpha on lastName failed') {
+                error.message = "Last name can only be letters";
+                err.message = "Bad Request"
+                err.status = 400;
+            }
+
+            if (error.message === 'Validation len on username failed') {
+                error.message = "Username must be between 4 and 30 characters";
+                err.message = "Bad Request"
+                err.status = 400;
+            }
             //create a spot errors
             if (error.message === 'Spot.address cannot be null') {
                 error.message = 'Street address is required',
