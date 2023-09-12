@@ -148,6 +148,54 @@ app.use((err, _req, _res, next) => {
                 err.status = 400
             }
 
+            if (error.message === 'Validation min on lng failed' || error.message === 'Validation max on lng failed') {
+                error.message = 'Longitude is not valid';
+                err.message = 'Bad Request';
+                err.status = 400
+            }
+
+            if (error.message === 'Validation min on lat failed' || error.message === 'Validation min on lat failed') {
+                error.message = 'Latitude is not valid';
+                err.message = 'Bad Request';
+                err.status = 400
+            }
+
+            if (error.message === 'Validation notEmpty on address failed') {
+                error.message = 'Address cannot be empty';
+                err.message = 'Bad Request';
+                err.status = 400
+            }
+
+            if (error.message === 'Validation not Empty on city failed') {
+                error.message = 'City cannot be empty';
+                err.message = 'Bad Request';
+                err.status = 400;
+            }
+
+            if (error.message === 'Validation notEmpty on state failed') {
+                error.message = 'State cannot be empty';
+                err.message = 'Bad Request';
+                err.status = 400;
+            }
+
+            if (error.message === 'Validation notEmpty on country failed') {
+                error.message = 'Country cannot be empty'
+                err.message = 'Bad Request'
+                err.status = 400
+            }
+
+            if (error.message === 'Validation len on description failed') {
+                error.message = 'Description must be between 15 and 256 characters';
+                err.message = 'Bad Request';
+                err.status = 400
+            }
+
+            if (error.message === 'Validation max on price failed' || error.message === 'Validation min on price failed') {
+                error.message = 'Price must be between 1 and 30,000'
+                err.message = 'Bad Request';
+                err.status = 400
+            }
+
             //spotimage errors
             if (error.message === 'url must be unique') {
                 error.message = 'Url belongs to another Image';

@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
   Spot.init({
     ownerId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
     },
     address: {
       type: DataTypes.STRING,
@@ -49,20 +49,30 @@ module.exports = (sequelize, DataTypes) => {
           if (typeof Number(splitAddress[0]) !== 'number' || splitAddress.length < 2) {
             throw new Error ('Please enter a valid address');
           } 
-        }
+        },
+        notEmpty: true
       }
     },
     city: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     },
     state: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     },
     country: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     },
     lat: {
       type: DataTypes.DECIMAL,
