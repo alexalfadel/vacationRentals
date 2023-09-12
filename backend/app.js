@@ -175,6 +175,14 @@ app.use((err, _req, _res, next) => {
                 err.status = 400
             }
 
+            //ReviewImage errors
+
+            if (error.message === 'ReviewImage.url cannot be null') {
+                error.message = 'Review Image url is required';
+                err.message = 'Bad Request';
+                err.status = 400
+            }
+
             
             errors[error.path] = error.message
         }
