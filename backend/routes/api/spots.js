@@ -343,7 +343,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         }
     })
 
-    console.log(currentBookingsStartDate, '!!!currentBookignsStartDate')
+    // console.log(currentBookingsStartDate, '!!!currentBookignsStartDate')
 
     if (currentBookingsStartDate.length) {
         dateError.errors.startDate = "Start date conflicts with an existing booking"
@@ -377,10 +377,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         endDate: endDate
     });
 
-    return res.status(200).json({
-        startDate: newBooking.startDate,
-        endDate: newBooking.endDate
-    })
+    return res.status(200).json(newBooking)
 
 
 
