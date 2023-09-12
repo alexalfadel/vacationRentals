@@ -262,6 +262,13 @@ app.use((err, _req, _res, next) => {
                 err.status = 400
             }
 
+            //route validation errors
+            if (error.message.includes('is not a valid integer')) {
+                error.message = 'Please provide a valid integer';
+                err.message = 'Bad request';
+                err.status = 404;
+            }
+
             
             errors[error.path] = error.message
         }
