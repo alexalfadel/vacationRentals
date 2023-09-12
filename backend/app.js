@@ -183,6 +183,13 @@ app.use((err, _req, _res, next) => {
                 err.status = 400
             }
 
+            //booking errors
+            if (error.message === 'endDate must be after startDate') {
+                error.message = 'endDate cannot be on or before startDate';
+                err.message = 'Bad Request';
+                err.status = 400
+            }
+
             
             errors[error.path] = error.message
         }

@@ -298,7 +298,25 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         })
     };
 
+
     const { startDate, endDate } = req.body;
+
+    const validationError = {
+        message: "Bad Request",
+        errors: {}
+    }
+
+    if (!startDate) {
+        validationError.errors.startDate = "Please enter a valid start date"
+    }
+
+    if (!endDate) {
+        validationError.errors.endDate = "Please enter a valid end date"
+    }
+
+    if (validationError.errors.startDate || validationError.errors.endDate) {
+        return res.status(400).json(validationError)
+    }
 
     const bookingStartDate = new Date(startDate);
     const bookingEndDate = new Date(endDate);
