@@ -132,7 +132,7 @@ app.use((err, _req, _res, next) => {
 
             //spotimage errors
             if (error.message === 'url must be unique') {
-                error.message = 'Url belongs to another Spot Image';
+                error.message = 'Url belongs to another Image';
                 err.message = 'Bad Request';
                 err.status = 400
             }
