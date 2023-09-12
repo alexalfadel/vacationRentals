@@ -132,7 +132,7 @@ app.use((err, _req, _res, next) => {
 
             //spotimage errors
             if (error.message === 'url must be unique') {
-                error.message = 'Url belongs to another Spot Image';
+                error.message = 'Url belongs to another Image';
                 err.message = 'Bad Request';
                 err.status = 400
             }
@@ -149,7 +149,39 @@ app.use((err, _req, _res, next) => {
                 err.status = 400;
             }
 
-            
+            //review errors
+
+            if (error.message === 'Review.stars cannot be null') {
+                error.message = "Stars are required";
+                err.message = 'Bad Request';
+                err.status = 400
+            }
+
+            if (error.message === 'Review.review cannot be null') {
+                error.message = 'Review text is required';
+                err.message = 'Bad Request';
+                err.status = 400;
+            }
+
+            if (error.message === 'Validation max on stars failed' || error.message === 'Validation min on stars failed') {
+                error.message = 'Stars must be an integer from 1 to 5';
+                err.message = 'Bad Request';
+                err.status = 400
+            }
+
+            if (error.message === 'Validation len on review failed') {
+                error.message = 'Review text must be between 10 and 256 characters';
+                err.message = 'Bad Request';
+                err.status = 400
+            }
+
+            //ReviewImage errors
+
+            if (error.message === 'ReviewImage.url cannot be null') {
+                error.message = 'Review Image url is required';
+                err.message = 'Bad Request';
+                err.status = 400
+            }
 
             
             errors[error.path] = error.message

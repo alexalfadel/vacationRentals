@@ -212,6 +212,46 @@ router.get('/', async (req, res) => {
 
 })
 
+router.post('/:spotId/reviews', requireAuth, async (req, res) => {
+    //check for spot
+    const spot = await Spot.findByPk(req.params.spotId) 
+
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    const refinedSpot = spot.dataValues
+    const user = req.user
+    //check to see if there is a review by that user for that spot
+
+    const userReviewsForSpot = await Review.findAll({
+        where: {
+            spotId: refinedSpot.id,
+            userId: user.id
+        }
+    })
+
+    if (userReviewsForSpot.length) {
+        return res.status(500).json({
+            message: "User already has a review for this spot"
+        })
+    }
+
+
+    const { review, stars } = req.body
+
+    const newReview = await Review.create({
+        userId: user.id,
+        spotId: req.params.spotId,
+        review: review,
+        stars: stars
+    })
+
+    return res.status(201).json(newReview);
+})
+
 router.post('/:spotId/images', requireAuth, async (req, res,) => {
     const { url, preview } = req.body;
 
