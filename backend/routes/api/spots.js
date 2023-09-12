@@ -301,6 +301,27 @@ router.get('/', async (req, res) => {
     //pagination
     let { page, size } = req.query;
 
+    const error = {
+        message: "Bad Request",
+        errors: {}
+    }
+
+    if (page && page < 1) error.errors.page = "Page must be greater than or equal to 1"
+    if (page && page > 10) error.errors.page = "Page must be less than or equal to 10"
+    if (size && size < 1) error.errors.size = "Size must be greater than or equal to 1"
+    if (size && size > 20) error.errors.size = "Size must be less than or equal to 20"
+    if (maxLat && (maxLat > 90 || maxLat < -90)) error.errors.maxLat = "Maximum latitude is invalid"
+    if (minLat && (minLat < -90 || minLat > 90)) error.errors.minLat = "Minimum latitude is invalid"
+    if (maxLng && (maxLng > 180 || maxLng < -180)) error.errors.maxLng = "Maximum longitude is invalid"
+    if (minLng && (minLng < -180 || minLng > 180)) error.errors.minLng = "Minimum longitude is invalid"
+    if (minPrice && minPrice < 0) error.errors.minPrice = "Minimum price must be greater than or equal to 0"
+    if (maxPrice && maxPrice < 0) error.errors.maxPrice = "Maximum price must be greater than or equal to 0"
+
+    if (Object.keys(error.errors).length) {
+        return res.status(400).json(error);
+    }
+    
+
 
     if (!Number.isNaN(page) && parseInt(page) <= 1) page = 1;
     else if (!Number.isNaN(page) && parseInt(page) >= 10) page = 10;
