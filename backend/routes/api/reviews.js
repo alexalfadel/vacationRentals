@@ -51,6 +51,10 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     })    
 })
 
+router.get('/current', requireAuth, async (req, res) => {
+    
+})
+
 
 
 module.exports = router;
