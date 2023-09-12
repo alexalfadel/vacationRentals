@@ -290,8 +290,104 @@ router.get('/:spotId', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
+    //search filters
+    let { minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+    let query = {
+        where: {},
+        include: []
+    }
     //getting all of the spots
-    const spots = await Spot.findAll();
+    // const spots = await Spot.findAll();
+    //pagination
+    let { page, size } = req.query;
+
+    const error = {
+        message: "Bad Request",
+        errors: {}
+    }
+
+    if (page && page < 1) error.errors.page = "Page must be greater than or equal to 1"
+    if (page && page > 10) error.errors.page = "Page must be less than or equal to 10"
+    if (size && size < 1) error.errors.size = "Size must be greater than or equal to 1"
+    if (size && size > 20) error.errors.size = "Size must be less than or equal to 20"
+    if (maxLat && (maxLat > 90 || maxLat < -90)) error.errors.maxLat = "Maximum latitude is invalid"
+    if (minLat && (minLat < -90 || minLat > 90)) error.errors.minLat = "Minimum latitude is invalid"
+    if (maxLng && (maxLng > 180 || maxLng < -180)) error.errors.maxLng = "Maximum longitude is invalid"
+    if (minLng && (minLng < -180 || minLng > 180)) error.errors.minLng = "Minimum longitude is invalid"
+    if (minPrice && minPrice < 0) error.errors.minPrice = "Minimum price must be greater than or equal to 0"
+    if (maxPrice && maxPrice < 0) error.errors.maxPrice = "Maximum price must be greater than or equal to 0"
+
+    if (Object.keys(error.errors).length) {
+        return res.status(400).json(error);
+    }
+    
+
+
+    if (!Number.isNaN(page) && parseInt(page) <= 1) page = 1;
+    else if (!Number.isNaN(page) && parseInt(page) >= 10) page = 10;
+    else if (!Number.isNaN(page)) page = parseInt(page);
+    else page = 1;
+
+    if (!Number.isNaN(size) && parseInt(size) <= 1) size = 1;
+    else if (!Number.isNaN(size) && parseInt(size) >= 20) size = 20;
+    else if (!Number.isNaN(size)) size = parseInt(size);
+    else size = 20;
+
+    const pagination = {};
+
+    if (size >= 1 && page >= 1) {
+        query.limit = size;
+        query.offset = size * (page - 1)
+    }
+
+    //querying
+
+    const Op = Sequelize.Op;
+
+    if (minLat) {
+        minLat = parseFloat(minLat)
+        query.where.lat = {
+            [Op.gte]: minLat
+        }
+    }
+
+    if (maxLat) {
+        maxLat = parseFloat(maxLat);
+        query.where.lat = {
+            [Op.lte]: maxLat
+        }
+    }
+
+    if (minLng) {
+        minLng = parseFloat(minLng);
+        query.where.lng = {
+            [Op.gte]: minLng
+        }
+    }
+
+    if (maxLng) {
+        maxLng = parseFloat(maxLng);
+        query.where.lng = {
+            [Op.lte]: maxLng
+        }
+    }
+
+    if (minPrice) {
+        minPrice = parseFloat(minPrice);
+        query.where.price = {
+            [Op.gte]: minPrice
+        }
+    }
+
+    if (maxPrice) {
+        maxPrice = parseFloat(maxPrice);
+        query.where.price = {
+            [Op.lte]: maxPrice
+        }
+    }
+
+    //
+    const spots = await Spot.findAll(query);
 
     let allSpots = {
         Spots: []
@@ -350,6 +446,9 @@ router.get('/', async (req, res) => {
         //adding each spot object to the array of spot objects
         allSpots.Spots.push(spotObj);
     }
+
+    allSpots.page = page;
+    allSpots.size = size;
 
    return res.status(200).json(allSpots);
 
