@@ -209,11 +209,17 @@ app.use((err, _req, _res, next) => {
                 err.status = 400
             }
 
-            if (error.message === 'SpotImage.url cannot be null') {
+            if (error.message === 'SpotImage.url cannot be null' || error.message === 'Validation notEmpty on url failed') {
                 error.message = 'Image Url required';
                 err.message = 'Bad Request';
                 err.status = 400;
             }
+
+            if (error.message.includes('is not a valid boolean')) {
+                error.message = 'Preview must be true or false';
+                err.message = 'Bad Request';
+                err.status = 400
+            }            
 
             //review errors
 
