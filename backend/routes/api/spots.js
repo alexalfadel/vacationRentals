@@ -82,6 +82,81 @@ router.get('/current', requireAuth, async (req, res) => {
 
 })
 
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+    //check if you are the owner
+    const user = req.user;
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    //check if spot exists
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    const bookingsRes = {
+        Bookings: []
+    }
+    //if you are the owner
+    if (user.id === spot.ownerId) {
+        const bookings = await Booking.findAll({
+            where: {
+                spotId:  spot.id
+            }
+        })
+
+        for (let i = 0; i < bookings.length; i++) {
+            const booking = bookings[i].dataValues;
+            let user = await User.findAll({
+                where: {
+                    id: booking.userId
+                },
+                attributes: {
+                    include: ['id', 'firstName', 'lastName'],
+                    exclude: ['email', 'username', 'hashedPassword', 'createdAt', 'updatedAt']
+                }
+            });
+
+            user = user[0].dataValues
+
+            const bookingObj = {
+                User: user,
+                ...booking
+            }
+
+            bookingsRes.Bookings.push(bookingObj);
+        }
+
+        
+    } else {
+        //if you are not the owner
+        const bookings = await Booking.findAll({
+            where: {
+                spotId:  spot.id
+            }
+        })
+
+        for (let i = 0; i < bookings.length; i++) {
+            const booking = bookings[i].dataValues;
+
+            const bookingsObj = {
+                spotId: booking.spotId,
+                startDate: booking.startDate,
+                endDate: booking.endDate
+            }
+
+            bookingsRes.Bookings.push(bookingsObj)
+        }
+
+    }
+
+    //if you are not the owner
+
+    //if you are the owner
+
+    return res.status(200).json(bookingsRes)
+})
+
 router.get('/:spotId/reviews', async (req, res) => {
     const spot = await Spot.findByPk(req.params.spotId);
     //if spot doesnt exist
