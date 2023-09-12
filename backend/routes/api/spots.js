@@ -1,6 +1,6 @@
 const express = require('express');
 const { Spot } = require('../../db/models');
-const { Review, SpotImage, User } = require('../../db/models')
+const { Review, SpotImage, User, ReviewImage } = require('../../db/models')
 const { requireAuth } = require('../../utils/auth')
 const router = express.Router();
 
@@ -77,6 +77,72 @@ router.get('/current', requireAuth, async (req, res) => {
     }
 
     return res.status(200).json(allUserSpotsRes);
+
+})
+
+router.get('/:spotId/reviews', async (req, res) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    //if spot doesnt exist
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    const reviewsData = await Review.findAll({
+        where: {
+            spotId: req.params.spotId
+        }
+    })
+
+    const reviewsRes = {
+        Reviews: []
+    };
+
+    for (let i = 0; i < reviewsData.length; i++) {
+        const review = reviewsData[i].dataValues;
+        const userData = await User.findAll({
+            where: {
+                id: review.userId
+            },
+            attributes: {
+                include: ['id', 'firstName', 'lastName'],
+                exclude: ['username', 'hashedPassword', 'createdAt', 'updatedAt']
+            }
+        });
+        const user = userData[0].dataValues
+        const reviewImages = await ReviewImage.findAll({
+            where: {
+                reviewId: review.id,
+            },
+            attributes: {
+                include: ['id', 'url'],
+                exclude: ['reviewId', 'createdAt', 'updatedAt']
+            }
+        });
+
+        const reviewObj = {
+            // id: review.id,
+            // userId: review.userId,
+            // review: review.review,
+            // stars: review.stars,
+            ...review,
+            User: {
+                ...user
+            },
+            ReviewImages: []
+        };
+
+        for (let i = 0; i < reviewImages.length; i++) {
+            const reviewData = reviewImages[i].dataValues;
+            const reviewImage = {...reviewData};
+            reviewObj.ReviewImages.push(reviewImage);
+        }
+
+        reviewsRes.Reviews.push(reviewObj)
+    };
+
+    return res.status(200).json(reviewsRes)
 
 })
 

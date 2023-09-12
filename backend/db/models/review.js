@@ -40,7 +40,6 @@ module.exports = (sequelize, DataTypes) => {
     spotId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      // unique: true
     },
     review: {
       type: DataTypes.STRING,

@@ -23,7 +23,6 @@ module.exports = {
       spotId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true
       },
       review: {
         type: Sequelize.STRING,
