@@ -58,8 +58,11 @@ module.exports = (sequelize, DataTypes) => {
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
-      isAlpha: true,
-      notEmpty: true
+      validate: {
+        isAlpha: true,
+        notEmpty: true
+      }
+      
     },
     email: {
       type: DataTypes.STRING,

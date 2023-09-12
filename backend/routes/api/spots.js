@@ -1,8 +1,10 @@
 const express = require('express');
+const Sequelize = require('sequelize');
 const { Spot } = require('../../db/models');
-const { Review, SpotImage, User, ReviewImage } = require('../../db/models')
+const { Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models')
 const { requireAuth } = require('../../utils/auth')
 const router = express.Router();
+// import { Op } from '@sequelize/core';
 
 router.get('/current', requireAuth, async (req, res) => {
     const userId = req.user.id;
@@ -78,6 +80,81 @@ router.get('/current', requireAuth, async (req, res) => {
 
     return res.status(200).json(allUserSpotsRes);
 
+})
+
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+    //check if you are the owner
+    const user = req.user;
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    //check if spot exists
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    const bookingsRes = {
+        Bookings: []
+    }
+    //if you are the owner
+    if (user.id === spot.ownerId) {
+        const bookings = await Booking.findAll({
+            where: {
+                spotId:  spot.id
+            }
+        })
+
+        for (let i = 0; i < bookings.length; i++) {
+            const booking = bookings[i].dataValues;
+            let user = await User.findAll({
+                where: {
+                    id: booking.userId
+                },
+                attributes: {
+                    include: ['id', 'firstName', 'lastName'],
+                    exclude: ['email', 'username', 'hashedPassword', 'createdAt', 'updatedAt']
+                }
+            });
+
+            user = user[0].dataValues
+
+            const bookingObj = {
+                User: user,
+                ...booking
+            }
+
+            bookingsRes.Bookings.push(bookingObj);
+        }
+
+        
+    } else {
+        //if you are not the owner
+        const bookings = await Booking.findAll({
+            where: {
+                spotId:  spot.id
+            }
+        })
+
+        for (let i = 0; i < bookings.length; i++) {
+            const booking = bookings[i].dataValues;
+
+            const bookingsObj = {
+                spotId: booking.spotId,
+                startDate: booking.startDate,
+                endDate: booking.endDate
+            }
+
+            bookingsRes.Bookings.push(bookingsObj)
+        }
+
+    }
+
+    //if you are not the owner
+
+    //if you are the owner
+
+    return res.status(200).json(bookingsRes)
 })
 
 router.get('/:spotId/reviews', async (req, res) => {
@@ -213,8 +290,104 @@ router.get('/:spotId', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
+    //search filters
+    let { minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+    let query = {
+        where: {},
+        include: []
+    }
     //getting all of the spots
-    const spots = await Spot.findAll();
+    // const spots = await Spot.findAll();
+    //pagination
+    let { page, size } = req.query;
+
+    const error = {
+        message: "Bad Request",
+        errors: {}
+    }
+
+    if (page && page < 1) error.errors.page = "Page must be greater than or equal to 1"
+    if (page && page > 10) error.errors.page = "Page must be less than or equal to 10"
+    if (size && size < 1) error.errors.size = "Size must be greater than or equal to 1"
+    if (size && size > 20) error.errors.size = "Size must be less than or equal to 20"
+    if (maxLat && (maxLat > 90 || maxLat < -90)) error.errors.maxLat = "Maximum latitude is invalid"
+    if (minLat && (minLat < -90 || minLat > 90)) error.errors.minLat = "Minimum latitude is invalid"
+    if (maxLng && (maxLng > 180 || maxLng < -180)) error.errors.maxLng = "Maximum longitude is invalid"
+    if (minLng && (minLng < -180 || minLng > 180)) error.errors.minLng = "Minimum longitude is invalid"
+    if (minPrice && minPrice < 0) error.errors.minPrice = "Minimum price must be greater than or equal to 0"
+    if (maxPrice && maxPrice < 0) error.errors.maxPrice = "Maximum price must be greater than or equal to 0"
+
+    if (Object.keys(error.errors).length) {
+        return res.status(400).json(error);
+    }
+    
+
+
+    if (!Number.isNaN(page) && parseInt(page) <= 1) page = 1;
+    else if (!Number.isNaN(page) && parseInt(page) >= 10) page = 10;
+    else if (!Number.isNaN(page)) page = parseInt(page);
+    else page = 1;
+
+    if (!Number.isNaN(size) && parseInt(size) <= 1) size = 1;
+    else if (!Number.isNaN(size) && parseInt(size) >= 20) size = 20;
+    else if (!Number.isNaN(size)) size = parseInt(size);
+    else size = 20;
+
+    const pagination = {};
+
+    if (size >= 1 && page >= 1) {
+        query.limit = size;
+        query.offset = size * (page - 1)
+    }
+
+    //querying
+
+    const Op = Sequelize.Op;
+
+    if (minLat) {
+        minLat = parseFloat(minLat)
+        query.where.lat = {
+            [Op.gte]: minLat
+        }
+    }
+
+    if (maxLat) {
+        maxLat = parseFloat(maxLat);
+        query.where.lat = {
+            [Op.lte]: maxLat
+        }
+    }
+
+    if (minLng) {
+        minLng = parseFloat(minLng);
+        query.where.lng = {
+            [Op.gte]: minLng
+        }
+    }
+
+    if (maxLng) {
+        maxLng = parseFloat(maxLng);
+        query.where.lng = {
+            [Op.lte]: maxLng
+        }
+    }
+
+    if (minPrice) {
+        minPrice = parseFloat(minPrice);
+        query.where.price = {
+            [Op.gte]: minPrice
+        }
+    }
+
+    if (maxPrice) {
+        maxPrice = parseFloat(maxPrice);
+        query.where.price = {
+            [Op.lte]: maxPrice
+        }
+    }
+
+    //
+    const spots = await Spot.findAll(query);
 
     let allSpots = {
         Spots: []
@@ -274,7 +447,113 @@ router.get('/', async (req, res) => {
         allSpots.Spots.push(spotObj);
     }
 
+    allSpots.page = page;
+    allSpots.size = size;
+
    return res.status(200).json(allSpots);
+
+})
+
+router.post('/:spotId/bookings', requireAuth, async (req, res) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    const user = req.user;
+
+    //check if spot exists
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    }
+    
+    //check if current user owns the spot
+    if (user.id === spot.ownerId) {
+        return res.status(403).json({
+            message: "You cannot book a booking for your own spot"
+        })
+    };
+
+
+    const { startDate, endDate } = req.body;
+
+    const validationError = {
+        message: "Bad Request",
+        errors: {}
+    }
+
+    if (!startDate) {
+        validationError.errors.startDate = "Please enter a valid start date"
+    }
+
+    if (!endDate) {
+        validationError.errors.endDate = "Please enter a valid end date"
+    }
+
+    if (validationError.errors.startDate || validationError.errors.endDate) {
+        return res.status(400).json(validationError)
+    }
+
+    const bookingStartDate = new Date(startDate);
+    const bookingEndDate = new Date(endDate);
+
+    //error message to be sent
+    const dateError = {
+        message: "Sorry, this spot is already booked for the specified dates",
+        errors: {}
+    };
+
+    //check for overlap
+    let Op = Sequelize.Op
+    //if start date is invalid
+    const currentBookingsStartDate = await Booking.findAll({
+        where: {
+            spotId: spot.id,
+            startDate: {
+                [Op.lte]: bookingStartDate
+            },
+            endDate: 
+            {
+                [Op.gte]: bookingStartDate
+            }
+        }
+    })
+
+    // console.log(currentBookingsStartDate, '!!!currentBookignsStartDate')
+
+    if (currentBookingsStartDate.length) {
+        dateError.errors.startDate = "Start date conflicts with an existing booking"
+    }
+
+    const currentBookingsEndDate = await Booking.findAll({
+        where: {
+            spotId: spot.id,
+            startDate: {
+                [Op.lte]: bookingEndDate
+            },
+            endDate: 
+            {
+                [Op.gte]: bookingEndDate
+            }
+        }
+    })
+
+    if (currentBookingsEndDate.length) {
+        dateError.errors.endDate = "End date conflicts with an exisiting booking"
+    }
+
+    if (dateError.errors.startDate || dateError.errors.endDate) {
+        return res.status(403).json(dateError)
+    }
+
+    const newBooking = await Booking.create({
+        spotId: spot.id,
+        userId: user.id,
+        startDate: startDate,
+        endDate: endDate
+    });
+
+    return res.status(200).json(newBooking)
+
+
 
 })
 
