@@ -194,15 +194,21 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 router.delete('/:bookingId', requireAuth, async (req, res) => {
     const user = req.user;
     const booking = await Booking.findByPk(req.params.bookingId);
-    const spot = await Spot.findByPk(booking.spotId)
+    
     //if booking doesn't exist
     if (!booking) {
         return res.status(404).json({
             message: "Booking couldn't be found"
         })
     };
+
+    const spot = await Spot.findByPk(booking.spotId)
     //if not booking owner
-    if (user.id !== booking.userId || user.id !== spot.ownerId) {
+    console.log(user.id, '!!!user id');
+    console.log(booking.userId, '!!! booking user id')
+    console.log(spot.ownerId, '!!!spot owner id')
+
+    if ((user.id !== booking.userId) && (user.id !== spot.ownerId)) {
         return res.status(403).json({
             message: "You must own the booking or spot to delete the booking"
         })
