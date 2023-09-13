@@ -540,6 +540,24 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         dateError.errors.endDate = "End date conflicts with an exisiting booking"
     }
 
+    const currentBookingsBothDates = await Booking.findAll({
+        where: {
+            spotId: spot.id,
+            startDate: {
+                [Op.gte]: bookingStartDate
+                    },
+            endDate: {
+                [Op.gte]: bookingEndDate
+                    }
+            }
+        })
+    
+
+    if (currentBookingsBothDates.length) {
+        dateError.errors.startDate = "Start date conflicts with an existing booking";
+        dateError.errors.endDate = "End date conflics wtih an existing booking"
+    }
+
     if (dateError.errors.startDate || dateError.errors.endDate) {
         return res.status(403).json(dateError)
     }
