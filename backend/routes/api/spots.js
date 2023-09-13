@@ -600,12 +600,14 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
 router.post('/:spotId/images', requireAuth, async (req, res,) => {
     const { url, preview } = req.body;
 
+    //pulling up the spot
     const spot = await Spot.findAll( {
         where: {
             id: req.params.spotId
         }
     })
 
+    //checking to see if spot exists
     if (!spot.length) {
     
         const err = new Error("Spot doesn't exist");
@@ -614,6 +616,7 @@ router.post('/:spotId/images', requireAuth, async (req, res,) => {
             throw err
     }
 
+    //checking to see if they own the spot
     if (spot[0].dataValues.ownerId !== req.user.id) {
         const err = new Error("Unauthorized");
         err.status = 403;
@@ -621,6 +624,27 @@ router.post('/:spotId/images', requireAuth, async (req, res,) => {
         throw err
     }
 
+    //checking to see if there is already a preview for a spot
+    if (preview === true) {
+        const spotPreviewImageData = await SpotImage.findAll({
+            where: {
+                spotId: req.params.spotId,
+                preview: true
+            }
+        })
+
+        const spotPreviewImage = spotPreviewImageData[0]
+    
+        if (spotPreviewImage) {
+            await spotPreviewImage.set({
+                preview: false
+            });
+            await spotPreviewImage.save();
+        }
+
+        console.log(spotPreviewImage)
+    }
+    
     const newSpotImage = await SpotImage.create({
         url: url,
         preview: preview,
