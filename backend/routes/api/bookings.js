@@ -24,7 +24,7 @@ router.get('/current', requireAuth, async (req, res) => {
             },
             attributes: {
                 include: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
-                exclude: ['createdAt', 'updatedAt']
+                exclude: ['description','createdAt', 'updatedAt']
             }
         })
         spot = spot[0].dataValues;
