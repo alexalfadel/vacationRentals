@@ -90,6 +90,10 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         validationError.errors.endDate = "Please enter a valid end date"
     }
 
+    if (startDate > endDate) {
+        validationError.errors.endDate = "endDate cannot be on or before startDate"
+    }
+
     if (validationError.errors.startDate || validationError.errors.endDate) {
         return res.status(400).json(validationError)
     }
@@ -170,6 +174,24 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         }
     })
 
+    const currentBookingsBothDates = await Booking.findAll({
+        where: {
+            spotId: spot.id,
+            startDate: {
+                [Op.gte]: newStartDate
+                    },
+            endDate: {
+                [Op.gte]: newEndDate
+                    }
+            }
+        })
+    
+
+    if (currentBookingsBothDates.length) {
+        dateError.errors.startDate = "Start date conflicts with an existing booking";
+        dateError.errors.endDate = "End date conflics wtih an existing booking"
+    }
+
     if (currentBookingsEndDate.length && !dateError.errors.booking) {
         dateError.errors.endDate = "End date conflicts with an exisiting booking"
     }
@@ -184,7 +206,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         endDate: endDate
     });
 
-    booking.save();
+    await booking.save();
 
     const updatedBooking = await Booking.findByPk(booking.id);
 
