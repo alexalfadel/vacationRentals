@@ -547,7 +547,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
                 [Op.gte]: bookingStartDate
                     },
             endDate: {
-                [Op.gte]: bookingEndDate
+                [Op.lte]: bookingEndDate
                     }
             }
         })
