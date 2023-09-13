@@ -262,6 +262,12 @@ app.use((err, _req, _res, next) => {
                 err.status = 400
             }
 
+            if (error.message === 'null is not a valid date') {
+                error.message = 'Please provide a valid date';
+                err.message = 'Bad Request';
+                err.status = 400
+            }
+
             //route validation errors
             if (error.message.includes('is not a valid integer')) {
                 error.message = 'Please provide a valid integer';
