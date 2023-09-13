@@ -24,7 +24,7 @@ router.get('/current', requireAuth, async (req, res) => {
             },
             attributes: {
                 include: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
-                exclude: ['createdAt', 'updatedAt']
+                exclude: ['description','createdAt', 'updatedAt']
             }
         })
         spot = spot[0].dataValues;
@@ -148,7 +148,12 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
     // console.log(currentBookingsStartDate, '!!!currentBookignsStartDate')
 
-    if (currentBookingsStartDate.length) {
+    if (newEndDate < today) {
+        dateError.message = 'Sorry, you cannot book for the past'
+        dateError.errors.booking = 'New booking cannot be in the past'
+    }
+
+    if (currentBookingsStartDate.length && !dateError.errors.booking) {
         dateError.errors.startDate = "Start date conflicts with an existing booking"
     }
 
@@ -165,11 +170,11 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         }
     })
 
-    if (currentBookingsEndDate.length) {
+    if (currentBookingsEndDate.length && !dateError.errors.booking) {
         dateError.errors.endDate = "End date conflicts with an exisiting booking"
     }
 
-    if (dateError.errors.startDate || dateError.errors.endDate) {
+    if (dateError.errors.startDate || dateError.errors.endDate || dateError.errors.booking) {
         return res.status(403).json(dateError)
     }
 
@@ -189,15 +194,18 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 router.delete('/:bookingId', requireAuth, async (req, res) => {
     const user = req.user;
     const booking = await Booking.findByPk(req.params.bookingId);
-    const spot = await Spot.findByPk(booking.spotId)
+    
     //if booking doesn't exist
     if (!booking) {
         return res.status(404).json({
             message: "Booking couldn't be found"
         })
     };
+
+    const spot = await Spot.findByPk(booking.spotId)
     //if not booking owner
-    if (user.id !== booking.userId || user.id !== spot.ownerId) {
+
+    if ((user.id !== booking.userId) && (user.id !== spot.ownerId)) {
         return res.status(403).json({
             message: "You must own the booking or spot to delete the booking"
         })
