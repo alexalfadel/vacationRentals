@@ -90,6 +90,10 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         validationError.errors.endDate = "Please enter a valid end date"
     }
 
+    if (startDate > endDate) {
+        validationError.errors.endDate = "endDate cannot be on or before startDate"
+    }
+
     if (validationError.errors.startDate || validationError.errors.endDate) {
         return res.status(400).json(validationError)
     }
@@ -202,7 +206,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         endDate: endDate
     });
 
-    booking.save();
+    await booking.save();
 
     const updatedBooking = await Booking.findByPk(booking.id);
 
