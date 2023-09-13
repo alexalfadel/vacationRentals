@@ -148,7 +148,12 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
     // console.log(currentBookingsStartDate, '!!!currentBookignsStartDate')
 
-    if (currentBookingsStartDate.length) {
+    if (newEndDate < today) {
+        dateError.message = 'Sorry, you cannot book for the past'
+        dateError.errors.booking = 'New booking cannot be in the past'
+    }
+
+    if (currentBookingsStartDate.length && !dateError.errors.booking) {
         dateError.errors.startDate = "Start date conflicts with an existing booking"
     }
 
@@ -165,11 +170,11 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         }
     })
 
-    if (currentBookingsEndDate.length) {
+    if (currentBookingsEndDate.length && !dateError.errors.booking) {
         dateError.errors.endDate = "End date conflicts with an exisiting booking"
     }
 
-    if (dateError.errors.startDate || dateError.errors.endDate) {
+    if (dateError.errors.startDate || dateError.errors.endDate || dateError.errors.booking) {
         return res.status(403).json(dateError)
     }
 
