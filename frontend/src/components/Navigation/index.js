@@ -10,41 +10,20 @@ import SignupFormModal from '../SignupFormModal';
 import * as sessionActions from '../../store/session';
 import './Navigation.css';
 
-function Navigation({ isLoaded }) {
-  const sessionUser = useSelector((state) => state.session.user);
-
-  let sessionLinks;
-  if (sessionUser) {
-    sessionLinks = (
-      <li>
-        <ProfileButton user={sessionUser} />
-      </li>
-    );
-  } else {
-    sessionLinks = (
-      <li>
-        <OpenModalButton
-          buttonText="Log In"
-          modalComponent={<LoginFormModal />}
-        />
-        <OpenModalButton
-          buttonText="Sign Up"
-          modalComponent={<SignupFormModal />}
-        />
-      </li>
-    );
-  }
+function Navigation({ isLoaded }){
+  const sessionUser = useSelector(state => state.session.user);
 
   return (
     <ul>
       <li>
-        <NavLink exact to="/">
-          Home
-        </NavLink>
+        <NavLink exact to="/">Home</NavLink>
       </li>
-      {isLoaded && sessionLinks}
+      {isLoaded && (
+        <li>
+          <ProfileButton user={sessionUser} />
+        </li>
+      )}
     </ul>
   );
 }
-
 export default Navigation;
