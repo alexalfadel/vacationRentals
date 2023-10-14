@@ -12,12 +12,18 @@ import './Navigation.css';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
+  const loggedIn = !sessionUser ? false : true
+
+  const createSpotLink = <li><NavLink to='/new-spot'>Create a New Spot</NavLink></li>
 
   return (
     <ul>
       <li>
-        <NavLink exact to="/">Home</NavLink>
+        <NavLink exact to="/">
+          <p><i className="fa-regular fa-heart" style={{color: '#e54363'}}></i>vacation</p>
+        </NavLink>
       </li>
+      {loggedIn && createSpotLink}
       {isLoaded && (
         <li>
           <ProfileButton user={sessionUser} />
