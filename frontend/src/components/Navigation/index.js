@@ -14,7 +14,7 @@ function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
   const loggedIn = !sessionUser ? false : true
 
-  const createSpotLink = <li><NavLink to='/new-spot'>Create a New Spot</NavLink></li>
+  const createSpotLink = <li><NavLink to='/spots/new'>Create a New Spot</NavLink></li>
 
   return (
     <ul>
