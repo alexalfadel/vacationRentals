@@ -61,13 +61,18 @@ export const createASpotThunk = (payload) => async (dispatch) => {
 
     if (response.ok) {
         console.log('spot was created')
-        const newSpot = dispatch(loadAllSpotsThunk());
+        const newSpot = await response.json();
+        dispatch(loadAllSpotsThunk());
         return newSpot
     } else return false
 }
 
 export const addImageToSpotThunk = (payload) => async (dispatch) => {
     const { spotId, image } = payload;
+
+    console.log(spotId, '----spotId')
+    console.log(image, '----image')
+    console.log(payload, '----payload')
     const fetchOptions = {
         method: 'POST',
         headers: {
@@ -75,7 +80,7 @@ export const addImageToSpotThunk = (payload) => async (dispatch) => {
         },
         body: JSON.stringify(image)
     }
-    const response = await csrfFetch(`/api/spots/${spotId}/images`);
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, fetchOptions);
     
     if (response.ok) {
         console.log('adding image')

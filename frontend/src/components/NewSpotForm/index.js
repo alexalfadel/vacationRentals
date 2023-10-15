@@ -56,6 +56,8 @@ function NewSpotForm() {
         if (!city.length || city === 'City') error.city = 'City is required'
         if (!state.length || state === 'State') error.state = 'State is required'
         if (!lat.length || lat === 'Latitude') error.lat = 'Latitude is required';
+        if (Number(lat) > 90 || Number(lat) < -90) error.lat = 'Latitude must be in valid range';
+        if (Number(lng) > 180 || Number(lng) < 180) error.lng = 'Longitude must be in valid range';
         if (!lng.length || lng === 'Longitude') error.lng = 'Longitude is required'
         if (description.length < 30 || description === 'Please write at least 30 characters') error.description = 'Description needs a minimum of 30 characters'
         if (!name.length || name === 'Name of your spot') error.name = 'Name is required'
@@ -103,7 +105,7 @@ function NewSpotForm() {
 
                 const prevImage = {
                     url: previewImage,
-                    previewImage: true
+                    preview: true
                 }
 
                 dispatch(addImageToSpotThunk({ 
@@ -115,13 +117,13 @@ function NewSpotForm() {
 
                 for (let i = 0; i < images.length; i ++) {
                     const image = images[i]
-                    if (image.length) {
+                    if (image.length && image !== 'Image URL') {
                         const imageObj = {
                             url: image,
-                            previewImage: false
+                            preview: false
                         }
 
-                        dispatch(addImageToSpotThunk({
+                        await dispatch(addImageToSpotThunk({
                             spotId: newForm.id,
                             image: imageObj
                         }))
