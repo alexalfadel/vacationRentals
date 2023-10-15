@@ -43,12 +43,13 @@ function SpotDetails () {
 
     const loggedIn = user ? true : false;
 
-    // console.log(loggedIn);
+    // console.log(spotData);
 
-    const { name, city, state, country, description, price, avgStarRating, numReviews, Owner, Reviews, SpotImages } = spotDetails;
+    const { name, city, state, country, description, price, avgStarRating, numReviews, Owner, Reviews, SpotImages, ownerId } = spotDetails;
 
     const { firstName, lastName } = Owner;
     
+    const currentOwner = user.id === ownerId ? true : false
 
     const reviews = Reviews.map(review => {
         return <Review review={review}/>
@@ -56,11 +57,13 @@ function SpotDetails () {
    
     let reviewInfo;
 
+    const reviewInnerText = Reviews.length === 1 ? 'review' : 'reviews';
+
     if (!Reviews.length) {
         reviewInfo = <p><span><i className="fa-solid fa-star"></i></span> New</p>
     } else {
         reviewInfo = <p><span><i className="fa-solid fa-star"></i></span> {formatRating(avgStarRating)} 
-            <span> <i className="fa-solid fa-circle"></i></span> {numReviews} reviews</p>
+            <span> <i className="fa-solid fa-circle"></i></span> {numReviews} {reviewInnerText}</p>
     }
 
 
@@ -89,7 +92,7 @@ function SpotDetails () {
                 <div className='spot-details-reserve-box'>
                     <div>
                         <p>${price} night</p>
-                        <p><span><i className="fa-solid fa-star"></i></span>{formatRating(avgStarRating)} <span><i className="fa-solid fa-circle"></i></span> {numReviews} reviews </p>
+                        <p><span><i className="fa-solid fa-star"></i></span>{formatRating(avgStarRating)} <span><i className="fa-solid fa-circle"></i></span> {numReviews} {reviewInnerText} </p>
                     </div>
                     <button className='reserve-button' onClick={reserveClick}>Reserve</button>
                 </div>
@@ -97,7 +100,7 @@ function SpotDetails () {
             <div className='reviews-header'>
                 {reviewInfo}
                 <button className={loggedIn ? 'visible' : 'hidden'}>Post Your Review</button>
-                {!Reviews.length && <p className={loggedIn ? 'visible' : 'hidden'}>Be the first to post a review!</p>}
+                {!Reviews.length && <p className={!currentOwner ? 'visible' : 'hidden'}>Be the first to post a review!</p>}
             </div>
             <div className='reviews'>
                 {reviews}
