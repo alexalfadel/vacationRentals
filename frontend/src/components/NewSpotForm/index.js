@@ -11,11 +11,23 @@ const invalidPrice = (str) => {
     else return false
 }
 
+const getRandomNumber = () => {
+    const newNum =  Math.floor(Math.random() * 10000000);
+    return newNum
+}
+
+
+
 const validImage = (str) => {
     const splitImage = str.split('.');
     const validEndings = ['jpg', 'png', 'jpeg']
     if (validEndings.includes(splitImage[splitImage.length - 1])) return true;
     else return false;
+}
+
+const imageName = (str, spotId) => {
+    const splitImage = str.split('.');
+    return `${spotId}-image-${getRandomNumber()}.${splitImage[splitImage.length - 1]}`
 }
 
 function NewSpotForm() {
@@ -57,13 +69,14 @@ function NewSpotForm() {
         if (!state.length || state === 'State') error.state = 'State is required'
         if (!lat.length || lat === 'Latitude') error.lat = 'Latitude is required';
         if (Number(lat) > 90 || Number(lat) < -90) error.lat = 'Latitude must be in valid range';
-        if (Number(lng) > 180 || Number(lng) < 180) error.lng = 'Longitude must be in valid range';
+        if (Number(lng) > 180 || Number(lng) < -180) error.lng = 'Longitude must be in valid range';
         if (!lng.length || lng === 'Longitude') error.lng = 'Longitude is required'
         if (description.length < 30 || description === 'Please write at least 30 characters') error.description = 'Description needs a minimum of 30 characters'
         if (!name.length || name === 'Name of your spot') error.name = 'Name is required'
         if (existingName) error.name = 'Spot name is already taken'
         if (invalidPrice(price)) error.price = 'Price is required';
         if (!previewImage.length || previewImage === 'Preview Image URL') error.prevImage = 'Preview image is required'
+        // if (!validImage(previewImage)) error.prevImage = ('Image URL must end in .png, .jpg, or .jpeg')
         if (!validImage(image2) && image2 !== 'Image URL') error.image2 = 'Image URL must end in .png, .jpg, or .jpeg'
         if (!validImage(image3) && image3 !== 'Image URL') error.image3 = 'Image URL must end in .png, .jpg, or .jpeg'
         if (!validImage(image4) && image4 !== 'Image URL') error.image4 = 'Image URL must end in .png, .jpg, or .jpeg'
@@ -104,11 +117,11 @@ function NewSpotForm() {
             if (newForm.id) {
 
                 const prevImage = {
-                    url: previewImage,
+                    url: imageName(previewImage, newForm.id),
                     preview: true
                 }
 
-                dispatch(addImageToSpotThunk({ 
+                await dispatch(addImageToSpotThunk({ 
                     spotId: newForm.id,
                     image: prevImage
                 }));
@@ -119,9 +132,10 @@ function NewSpotForm() {
                     const image = images[i]
                     if (image.length && image !== 'Image URL') {
                         const imageObj = {
-                            url: image,
+                            url: imageName(image, newForm.id),
                             preview: false
                         }
+
 
                         await dispatch(addImageToSpotThunk({
                             spotId: newForm.id,
@@ -144,7 +158,8 @@ function NewSpotForm() {
                 //     }
                 // })
 
-                console.log('spot was created')
+                // console.log('spot was created')
+                await dispatch(loadAllSpotsThunk())
                 history.push(`/spots/${newForm.id}`)
                 reset();
             }
