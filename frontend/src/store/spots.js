@@ -112,10 +112,27 @@ export const addReviewBySpotIdThunk = ({ review, spotId}) => async (dispatch) =>
     }
 }
 
-// export const getAllReviewsBySpotIdThunk = (spotId) = async (dispatch) => {
-//     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
+export const getAllSpotsCurrentUser = () => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/current`)
+    if (response.ok) {
+        const userSpots = await response.json();
+        console.log(userSpots, '-----userSpots from the thunk')
+        dispatch(loadSpots(userSpots));
+    }
+}
 
-// }
+export const deleteSpotThunk = (spotId) => async (dispatch) => {
+    const fetchOptions = {
+        method: 'DELETE'
+    }
+
+    console.log(spotId)
+    const response = await csrfFetch(`/api/spots/${spotId}`, fetchOptions);
+    if (response.ok) {
+        const message = await response.json();
+        
+    }
+}
 
 const initialState = {};
 
