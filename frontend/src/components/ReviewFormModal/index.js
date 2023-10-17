@@ -1,13 +1,16 @@
 import { useModal } from "../../context/Modal";
-import OpenModalButton from "../OpenModalButton";
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
+import { useHistory, Redirect } from 'react-router-dom'
+import { addReviewBySpotIdThunk, loadSpotThunk } from "../../store/spots";
 
-const ReviewFormModal = () => {
+const ReviewFormModal = ({ spotId }) => {
     const dispatch = useDispatch();
-    // const [ showForm, setShowForm ] = useState(false)
+    const { closeModal } = useModal();
+    const history = useHistory();
+    const [, updateState] = useState();
     const [ reviewText, setReviewText ] = useState('Leave your review here...')
-    const [ stars, setStars ] = useState('')
+    const [ stars, setStars ] = useState()
     const [ star1, setStar1 ] = useState(false);
     const [ star1Class, setStar1Class ] = useState('fa-regular fa-star');
     const [ star2Class, setStar2Class ] = useState('fa-regular fa-star');
@@ -21,14 +24,64 @@ const ReviewFormModal = () => {
     const [ submit, setSubmit ] = useState(false)
     const [ errors, setErrors ] = useState({})
     const [ showErrors, setShowErrors ] = useState(false)
-    const { closeModal } = useModal();
+    
    
     useEffect(() => {
         const error = {}
         if (reviewText.length < 10 || reviewText === 'Leave your review here...') error.review = 'Review must be at least 10 characters long'
         setErrors(error)
-    }, [reviewText])
 
+        if (errors.review || !stars) setSubmit(false);
+        else setSubmit(true)
+    }, [reviewText, stars, submit])
+
+    const onSubmit = async(e) => {
+        e.preventDefault();
+
+        const review = {
+            review: reviewText,
+            stars
+        }
+
+        const payload = {
+            review,
+            spotId
+        }
+
+        const newReview = await dispatch(addReviewBySpotIdThunk(payload))
+
+
+        if (newReview.id) {
+            console.log('right before the redirect...')
+            closeModal();
+            history.push(`/spots/${spotId}`);
+            dispatch(loadSpotThunk(spotId))
+        }
+        else if (newReview.error) {
+            setErrors(newReview.error)
+            setShowErrors(true)
+        }
+
+    }
+
+    const reset = () => {
+        setReviewText('Leave your review here...')
+        setStars();
+        setErrors({});
+        setShowErrors(false)
+        setStar1(false);
+        setStar2(false);
+        setStar3(false);
+        setStar4(false);
+        setStar5(false);
+        setStar1Class('fa-regular fa-star')
+        setStar2Class('fa-regular fa-star')
+        setStar3Class('fa-regular fa-star')
+        setStar4Class('fa-regular fa-star')
+        setStar5Class('fa-regular fa-star')
+        
+    
+    }
 
     const calculateStars = (star) => {
         const allStars = [star1, star2, star3, star4, star5]
@@ -52,6 +105,8 @@ const ReviewFormModal = () => {
             setStar5(false)
             setStar5Class('fa-regular fa-star')
         } 
+
+        setStars(1)
     }
 
     const star2Click = () => {
@@ -73,6 +128,7 @@ const ReviewFormModal = () => {
             setStar5(false);
             setStar5Class('fa-regular fa-star')
         }
+        setStars(2)
     }
 
     const star1Hover = () => {
@@ -157,6 +213,7 @@ const ReviewFormModal = () => {
             return
 
         }
+        setStars(3)
     }
 
     const star4Click = () => {
@@ -175,6 +232,8 @@ const ReviewFormModal = () => {
         } else if (star4 && !star5) {
             return
         }
+
+        setStars(4)
     }
 
     const star5Click = () => {
@@ -192,12 +251,14 @@ const ReviewFormModal = () => {
             setStar4Class('fa-solid fa-star')
             setStar5Class('fa-solid fa-star')
         } 
+
+        setStars(5)
     }
 
     
     return (
         <>
-            <form>
+            <form onSubmit={onSubmit}>
                 <h2>How was your stay?</h2>
                 {showErrors && <p>{errors.review}</p>}
                 <textarea id='reviewText' onChange={(e) => setReviewText(e.target.value)} value={reviewText}></textarea>
@@ -208,7 +269,7 @@ const ReviewFormModal = () => {
                     <span><i className={star4Class} onClick={star4Click} onMouseEnter={star4Hover} onMouseLeave={star4Leave}></i></span>
                     <span><i className={star5Class} onClick={star5Click} onMouseEnter={star5Hover} onMouseLeave={star5Leave}></i></span> Stars</p>
                 </div>
-                <button>Submit your review</button>
+                <button disabled={submit ? false : true} >Submit your review</button>
             </form>
 
         </>
@@ -219,25 +280,4 @@ export default ReviewFormModal
 
 
 
- // const ulRef = useRef();
-
-    // const openForm = () => {
-    //     if (showForm) return;
-    //     setShowMenu(true)
-    // }
-
-    // useEffect(() => {
-    //     if (!showForm) return;
-
-    //     const closeForm = (e) => {
-    //         if (!ulRef.current.contains(e.target)) {
-    //             setShowForm(false)
-    //         }
-    //     }
-
-    //     document.addEventListener('click', closeForm)
-
-    //     return () => document.removeEventListener('click', closeForm)
-    // }, [showForm])
-
-    // const closeForm = () => setShowForm(false)
+ 

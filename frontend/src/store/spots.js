@@ -88,6 +88,35 @@ export const addImageToSpotThunk = (payload) => async (dispatch) => {
     }
 }
 
+export const addReviewBySpotIdThunk = ({ review, spotId}) => async (dispatch) => {
+    const fetchOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(review)
+    }
+
+    console.log('we made it to the thunk')
+
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, fetchOptions)
+
+    if (response.ok) {
+        const newReview = await response.json();
+        console.log(newReview, '---newReview from the thunk')
+        return newReview;
+    } else if (response.error) {
+        const errors = await response.json();
+        console.log(errors, '----the errors response from the tunk')
+        return errors;
+    }
+}
+
+// export const getAllReviewsBySpotIdThunk = (spotId) = async (dispatch) => {
+//     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
+
+// }
+
 const initialState = {};
 
 const spotsReducer = (state = initialState, action) => {
