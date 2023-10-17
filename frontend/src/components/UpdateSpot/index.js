@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loadSpotThunk } from "../../store/spots";
+import { loadSpotThunk, loadAllSpotsThunk, updateSpotThunk } from "../../store/spots";
 
 function UpdateSpotForm() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { spotId } = useParams();
-  const spotDetails = useSelector((state) => state.spots);
-  const spot = spotDetails[spotId];
+  const allSpotDetails = useSelector((state) => Object.values(state.spots));
+  const spot = allSpotDetails.find((currSpot) => currSpot.id === Number(spotId))
   const [country, setCountry] = useState(spot.country);
   const [address, setAddress] = useState(spot.address);
   const [city, setCity] = useState(spot.city);
@@ -20,40 +21,50 @@ function UpdateSpotForm() {
   const [showErr, setShowErr] = useState(false);
   const [errors, setErrors] = useState({});
 
-  // console.log(previewImageUrl)
   useEffect(() => {
-    dispatch(loadSpotThunk(spotId));
+    dispatch(loadAllSpotsThunk());
   }, [dispatch]);
 
-  useEffect((e) => {
+  
+
+  useEffect(() => {
     const error = {}
 
-    const existingName = allSpots.find(spot => spot.name === name)
+    const existingName = allSpotDetails.find(spot => spot.name === name)
+    const originalName = spot.name;
 
     if (!country.length) error.country = 'Country is required'
     if (!address.length) error.address = 'Address is required'
     if (!city.length) error.city = 'City is required'
     if (!state.length) error.state = 'State is required'
-    if (!lat.length) error.lat = 'Latitude is required';
+    if (!lat) error.lat = 'Latitude is required';
     if (Number(lat) > 90 || Number(lat) < -90) error.lat = 'Latitude must be in valid range';
     if (Number(lng) > 180 || Number(lng) < -180) error.lng = 'Longitude must be in valid range';
-    if (!lng.length) error.lng = 'Longitude is required'
+    if (!lng) error.lng = 'Longitude is required'
     if (description.length < 30) error.description = 'Description needs a minimum of 30 characters'
     if (!name.length) error.name = 'Name is required'
+    if (existingName && name !== originalName) error.name = 'Name is already taken'
 
     setErrors(error)
   }, [country, address, city, state, lat, lng, description, name, price])
-  if (!spot) return <h2>Loading...</h2>;
+
+
+  if (!allSpotDetails) return <h2>Loading...</h2>;
 
   // console.log()
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    console.log(typeof lat, lat, '---this is lat and typeof lat')
+
+    console.log('---we are in onSubmit')
     let newForm;
 
         if (Object.values(errors).length) {
             setShowErr(true)
+            console.log('---we have errors')
+            console.log(errors)
         } else {
             const spotData = {
                 address,
@@ -68,12 +79,39 @@ function UpdateSpotForm() {
             }
 
             const payload = {
-                spotId,
+                spotId: Number(spotId),
                 spotData
             }
 
+            console.log('about to dispatch updateSpot thunk from component')
+
+            newForm = await dispatch(updateSpotThunk(payload))
+
+            if (newForm.id) {
+                history.push(`/spots/${newForm.id}`)
+                // await dispatch(loadAllSpotsThunk())
+               
+                reset();
+            } else {
+                console.log(newForm)
+            }
 
         }
+  }
+
+  const reset = () => {
+    setCountry(spot.country);
+    setAddress(spot.address);
+    setCity(spot.city);
+    setState(spot.state);
+    setLat(spot.lat);
+    setLng(spot.lng);
+    setDescription(spot.description);
+    setName(spot.name);
+    setPrice(spot.price);
+    setShowErr(false);
+    setErrors({})
+
   }
 
   return (
@@ -83,7 +121,7 @@ function UpdateSpotForm() {
       <p>
         Guests will only get your exact address once they booked a reservation.
       </p>
-      <form>
+      <form onSubmit={onSubmit}>
         <div>
           {showErr && <p>{errors.country}</p>}
           <label htmlFor="country">Country</label>

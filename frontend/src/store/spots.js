@@ -143,11 +143,20 @@ export const updateSpotThunk = ({ spotId, spotData }) => async (dispatch) => {
         body: JSON.stringify(spotData)
     }
 
-    const response = await csrfFetch(`/api/spots/${spotId}`)
+    console.log(spotId, '---this is spotId');
+    console.log(spotData, '----this is spotData')
+
+    const response = await csrfFetch(`/api/spots/${spotId}`, fetchOptions)
 
     if (response.ok) {
+        console.log('successfully updated the spot')
         const updatedSpot = await response.json()
-    } 
+        dispatch(loadSpotThunk(updatedSpot.id))
+        return updatedSpot;
+    } else {
+        const failedResponse = await response.json();
+        return failedResponse
+    }
 }
 
 const initialState = {};
