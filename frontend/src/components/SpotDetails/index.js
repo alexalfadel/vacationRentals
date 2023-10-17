@@ -29,7 +29,7 @@ const formatRating = (num) => {
     if (num) {
         if (nums.includes(num)) return `${num}.0`
         if (num.toString().length > 3) {
-        return num.toFixed(1)
+        return num.toFixed(2)
         }
     }
     
@@ -124,11 +124,9 @@ function SpotDetails () {
             <span> <i className="fa-solid fa-circle"></i></span> {numReviews} {reviewInnerText}</p>
     }
 
-    //have they posted a review yet?
+   
     console.log(Object.values(Reviews))
-    // const userReview = Object.values(Reviews).find(review => review.userId === user.id)
-
-    // const canPost = userReview ? false : true
+    
 
 
     const reserveClick = () => {
@@ -157,7 +155,8 @@ function SpotDetails () {
                 <div className='spot-details-reserve-box'>
                     <div>
                         <p>${price} night</p>
-                        <p><span><i className="fa-solid fa-star"></i></span>{formatRating(avgStarRating)} <span><i className="fa-solid fa-circle"></i></span> {numReviews} {reviewInnerText} </p>
+                        {/* <p><span><i className="fa-solid fa-star"></i></span>{numReviews}<span><i className="fa-solid fa-circle"></i></span> {numReviews} {reviewInnerText} </p> */}
+                        {reviewInfo}
                     </div>
                     <button className='reserve-button' onClick={reserveClick}>Reserve</button>
                 </div>

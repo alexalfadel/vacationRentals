@@ -10,7 +10,7 @@ const formatRating = (num) => {
     if (num) {
         if (nums.includes(num)) return `${num}.0`
         if (num.toString().length > 3) {
-        return num.toFixed(1)
+        return num.toFixed(2)
         }
     }
     
