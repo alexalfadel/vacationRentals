@@ -53,7 +53,7 @@ function ManageSpots () {
                         <button onClick={() => {
                             history.push(`/spots/${id}/edit`)
                         }}>Update</button>
-                        <OpenModalButton buttonText='Dele' modalComponent={<DeleteSpotModal spotId={id} />} />
+                        <OpenModalButton buttonText='Delete' modalComponent={<DeleteSpotModal spotId={id} />} />
 
                     </div>
                 </div>

@@ -134,6 +134,22 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
     }
 }
 
+export const updateSpotThunk = ({ spotId, spotData }) => async (dispatch) => {
+    const fetchOptions = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(spotData)
+    }
+
+    const response = await csrfFetch(`/api/spots/${spotId}`)
+
+    if (response.ok) {
+        const updatedSpot = await response.json()
+    } 
+}
+
 const initialState = {};
 
 const spotsReducer = (state = initialState, action) => {
