@@ -25,6 +25,9 @@ const capitalizeWords = (str) => {
 const formatRating = (num) => {
     const nums = [1, 2, 3, 4, 5];
     if (nums.includes(num)) return `${num}.0`
+    if (num.toString().length > 3) {
+        return num.toFixed(1)
+    }
     else return num;
 }
 
