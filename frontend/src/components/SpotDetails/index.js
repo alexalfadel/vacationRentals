@@ -7,6 +7,8 @@ import { restoreUser } from '../../store/session';
 import Review from '../Review';
 import ReviewFormModal from '../ReviewFormModal';
 import OpenModalButton from '../OpenModalButton';
+import DeleteReviewModal from '../DeleteReviewModal';
+
 
 
 
@@ -48,7 +50,7 @@ function SpotDetails () {
 
     useEffect(() => {
         dispatch(loadSpotThunk(spotId))
-    }, [dispatch, spotId])
+    }, [dispatch, spotId, spotData.Reviews])
 
     useEffect(() => {
         dispatch(restoreUser())
@@ -90,9 +92,25 @@ function SpotDetails () {
         return 0;
     })
 
+    // let showDelete;
+    // if (loggedIn) {
+
+    // }
 
     const reviews = Reviews.map(review => {
-        return <Review review={review}/>
+        let showDelete;
+        if (loggedIn && user.id === review.userId) {
+            showDelete = true;
+        } else showDelete = false;
+        return (
+            <>
+            <Review review={review}/>
+            <div className={showDelete ? 'visible' : 'hidden'}>
+                <OpenModalButton buttonText='Delete' modalComponent={<DeleteReviewModal review={review} />} />
+            </div>
+            </>
+            
+        )
     })
    
     let reviewInfo;

@@ -1,4 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
+import DeleteReviewModal from '../DeleteReviewModal';
+import OpenModalButton from '../OpenModalButton';
 
 const formatDate = (string) => {
     const splitDate = string.split('-');
@@ -20,7 +24,10 @@ function Review({ review }) {
     const { stars, createdAt, User} = review;
     const { firstName } = User;
     const reviewText = review.review;
+    const currentUser = useSelector((state) => state.session.user)
     const date = formatDate(createdAt);
+
+
 
 
     return (

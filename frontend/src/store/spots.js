@@ -159,6 +159,21 @@ export const updateSpotThunk = ({ spotId, spotData }) => async (dispatch) => {
     }
 }
 
+export const deleteReviewThunk = ({ id, spotId }) => async (dispatch) => {
+    const fetchOptions = {
+        method: 'DELETE'
+    }
+    const response = await csrfFetch(`/api/reviews/${id}`, fetchOptions)
+
+    console.log(id, spotId, '------id, spotId, from thunk')
+
+    if (response.ok) {
+        console.log('----review successfully deleted')
+        await response.json();
+        dispatch(loadSpotThunk(spotId))
+    }
+}
+
 const initialState = {};
 
 const spotsReducer = (state = initialState, action) => {
