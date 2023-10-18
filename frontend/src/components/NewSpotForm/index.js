@@ -25,10 +25,10 @@ const validImage = (str) => {
     else return false;
 }
 
-const imageName = (str, spotId) => {
-    const splitImage = str.split('.');
-    return `${spotId}-image-${getRandomNumber()}.${splitImage[splitImage.length - 1]}`
-}
+// const imageName = (str, spotId) => {
+//     const splitImage = str.split('.');
+//     return `${spotId}-image-${getRandomNumber()}.${splitImage[splitImage.length - 1]}`
+// }
 
 function NewSpotForm() {
     const dispatch = useDispatch();
@@ -117,7 +117,7 @@ function NewSpotForm() {
             if (newForm.id) {
 
                 const prevImage = {
-                    url: imageName(previewImage, newForm.id),
+                    url: previewImage,
                     preview: true
                 }
 
@@ -132,7 +132,7 @@ function NewSpotForm() {
                     const image = images[i]
                     if (image.length && image !== 'Image URL') {
                         const imageObj = {
-                            url: imageName(image, newForm.id),
+                            url: image,
                             preview: false
                         }
 

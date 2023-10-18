@@ -12,6 +12,7 @@ import DeleteReviewModal from '../DeleteReviewModal';
 
 
 
+
 const capitalizeWords = (str) => {
     if (str.length <= 3) return str.toUpperCase();
     else {
@@ -124,11 +125,8 @@ function SpotDetails () {
             <span> · </span> {numReviews} {reviewInnerText}</p>
     }
 
-    // <i className="fa-solid fa-circle"></i>
-
-   
-    console.log(Object.values(Reviews))
     
+
 
 
     const reserveClick = () => {

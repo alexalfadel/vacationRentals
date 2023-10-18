@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 import { loadAllSpotsThunk } from '../../store/spots';
 import { Link } from 'react-router-dom'
 
+
+
 const formatRating = (num) => {
     const nums = [1, 2, 3, 4, 5];
     if (num) {
@@ -29,6 +31,7 @@ function AllSpots () {
     }, [dispatch])
 
     const loadEachSpotTile = allSpots?.map(({ id, name, city, state, price, avgRating, previewImage, description}) => {
+        
         return (
             <Link id={`spot${id}`} to={`/spots/${id}`}>
                 <div className='spots-square' id={id} onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}>
