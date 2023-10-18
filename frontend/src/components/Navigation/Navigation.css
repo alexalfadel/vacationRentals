@@ -1,3 +1,59 @@
-.hidden {
-    display: none
+@import url('https://fonts.googleapis.com/css2?family=Aleo&family=Outfit:wght@500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
+
+.hidden {
+    display: none;
+}
+
+.header {
+    border-bottom: 2px solid rgba(213,213,213,255);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+    padding: 15px 14px;
+    /* background-color: yellow; */
+}
+
+.header-name {
+    color: rgba(254,72,86,255);
+    text-decoration: none;
+    font-size: 30px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-left: 1vw;
+    /* background-color: gray; */
+}
+
+.profile-button {
+    border: 1px solid black;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 20px;
+    display: flex;
+    gap: 4px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+

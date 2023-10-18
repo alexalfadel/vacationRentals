@@ -17,16 +17,16 @@ function Navigation({ isLoaded }){
   const createSpotLink = <li><NavLink to='/spots/new'>Create a New Spot</NavLink></li>
 
   return (
-    <ul>
+    <ul className='header'>
       <li>
-        <NavLink exact to="/">
-          <p><i className="fa-regular fa-heart" style={{color: '#e54363'}}></i>vacation</p>
+        <NavLink className='header-name' exact to="/">
+          <p className='logo-link'><i className="fa-regular fa-heart" style={{color: '#e54363'}}></i> vacations</p>
         </NavLink>
       </li>
       {loggedIn && createSpotLink}
       {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
+        <li className='profile-button'>
+          <span><i class="fa-solid fa-bars"></i></span><ProfileButton user={sessionUser} />
         </li>
       )}
     </ul>
