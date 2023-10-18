@@ -5,11 +5,11 @@ import { useHistory } from 'react-router-dom'
 import { addImageToSpotThunk } from '../../store/spots'
 import { loadAllSpotsThunk } from '../../store/spots'
 
-const invalidPrice = (str) => {
-    if (isNaN(Number(str))) return true
-    else if (str.length === 0) return true
-    else return false
-}
+// const invalidPrice = (str) => {
+//     if (isNaN(Number(str))) return true
+//     else if (str.length === 0) return true
+//     else return false
+// }
 
 const getRandomNumber = () => {
     const newNum =  Math.floor(Math.random() * 10000000);
@@ -40,7 +40,7 @@ function NewSpotForm() {
     const [ state, setState ] = useState('State');
     const [ lat, setLat ] = useState('Latitude');
     const [ lng, setLng ] = useState('Longitude')
-    const [ description, setDescription ] = useState('Please write at least 30 characters')
+    const [ description, setDescription ] = useState('Please write at least 30 characters.')
     const [ name, setName ] = useState('Name of your spot')
     const [ price, setPrice ] = useState('Price per night (USD)')
     const [ previewImage, setPreviewImage ] = useState('Preview Image URL');
@@ -74,7 +74,7 @@ function NewSpotForm() {
         if (description.length < 30 || description === 'Please write at least 30 characters') error.description = 'Description needs a minimum of 30 characters'
         if (!name.length || name === 'Name of your spot') error.name = 'Name is required'
         if (existingName) error.name = 'Spot name is already taken'
-        if (invalidPrice(price)) error.price = 'Price is required';
+        if (price < 1 || price > 30000) error.price = 'Price is required';
         if (!previewImage.length || previewImage === 'Preview Image URL') error.prevImage = 'Preview image is required'
         // if (!validImage(previewImage)) error.prevImage = ('Image URL must end in .png, .jpg, or .jpeg')
         if (!validImage(image2) && image2 !== 'Image URL') error.image2 = 'Image URL must end in .png, .jpg, or .jpeg'
@@ -175,7 +175,7 @@ function NewSpotForm() {
         setState('State')
         setLat('Latitude')
         setLng('Longitude')
-        setDescription('Description')
+        setDescription('Please write at least 30 characters.')
         setName('Name of your spot')
         setPrice('Price per night (USD)')
         setPreviewImage('Preview Image URL')
@@ -191,7 +191,7 @@ function NewSpotForm() {
 
     return (
         <>
-            <h2>Create a new Spot</h2>
+            <h2>Create a New Spot</h2>
             <h3>Where's your place located?</h3>
             <p>Guests will only get your exact address once they booked a reservation.</p>
             <form onSubmit={onSubmit}>
@@ -244,7 +244,7 @@ function NewSpotForm() {
                 <div>
                     <h3>Set a base price for your spot</h3>
                     <p>Competitve pricing can help your listing stand out and rank higher in search results.</p>
-                    <span>$</span><input id='price' type='text' onChange={(e) => setPrice(e.target.value)} value={price}></input>
+                    <span>$</span><input id='price' type='number' onChange={(e) => setPrice(e.target.value)} value={price}></input>
                     {showErr && <p>{errors.price}</p>}
                 </div>
                 <div>

@@ -29,14 +29,22 @@ const ReviewFormModal = ({ spotId }) => {
     useEffect(() => {
         const error = {}
         if (reviewText.length < 10 || reviewText === 'Leave your review here...') error.review = 'Review must be at least 10 characters long'
+        if (reviewText.length > 256) error.reviewMax = 'Review must be under 256 characters'
         setErrors(error)
 
+    }, [reviewText])
+
+    useEffect(() => {
         if (errors.review || !stars) setSubmit(false);
         else setSubmit(true)
-    }, [reviewText, stars, submit])
+    }, [stars, errors])
 
     const onSubmit = async(e) => {
         e.preventDefault();
+
+        // if (Object.value(errors.length)) {
+        //     setShowErrors(true)
+        // }
 
         const review = {
             review: reviewText,
@@ -48,7 +56,9 @@ const ReviewFormModal = ({ spotId }) => {
             spotId
         }
 
-        const newReview = await dispatch(addReviewBySpotIdThunk(payload))
+        const newReview = await dispatch(addReviewBySpotIdThunk(payload)).catch(async (errors) => await errors.json())
+
+        console.log(newReview, '----newReview after thunk in componenet before if statements')
 
 
         if (newReview.id) {
@@ -56,12 +66,14 @@ const ReviewFormModal = ({ spotId }) => {
             closeModal();
             history.push(`/spots/${spotId}`);
             dispatch(loadSpotThunk(spotId))
-        }
-        else if (newReview.error) {
-            setErrors(newReview.error)
+        } else if (newReview.errors) {
+            console.log(newReview, '-----newReview')
+            console.log(newReview.errors, '------newReview.errror')
+            // setErrors(newReview.errors.review)
             setShowErrors(true)
+            console.log(errors, '----errors')
         }
-
+        
     }
 
     const reset = () => {
@@ -95,7 +107,8 @@ const ReviewFormModal = ({ spotId }) => {
         if (!star1) {
             setStar1(true)
             setStar1Class("fa-solid fa-star");
-        } else if (star1 && star2 || star3 || star4 || star5) {
+        } 
+        else if (star1 && (star2 || star3 || star4 || star5)) {
             setStar2(false)
             setStar2Class('fa-regular fa-star')
             setStar3(false)
@@ -104,19 +117,19 @@ const ReviewFormModal = ({ spotId }) => {
             setStar4Class('fa-regular fa-star')
             setStar5(false)
             setStar5Class('fa-regular fa-star')
-        } 
+        } else if (star1 && !star2) {
+            return
+        }
 
         setStars(1)
     }
 
     const star2Click = () => {
+        console.log('star 2 clicked')
         if (!star1 && !star2) {
             setStar1(true)
             setStar2(true)
             setStar1Class("fa-solid fa-star");
-            setStar2Class("fa-solid fa-star");
-        } else if (!star2) {
-            setStar2(true)
             setStar2Class("fa-solid fa-star");
         } else if (star2 && !star3) {
             return
@@ -127,7 +140,7 @@ const ReviewFormModal = ({ spotId }) => {
             setStar4Class('fa-regular fa-star')
             setStar5(false);
             setStar5Class('fa-regular fa-star')
-        }
+        } 
         setStars(2)
     }
 
@@ -260,7 +273,7 @@ const ReviewFormModal = ({ spotId }) => {
         <>
             <form onSubmit={onSubmit}>
                 <h2>How was your stay?</h2>
-                {showErrors && <p>{errors.review}</p>}
+                {showErrors && <p>{errors.reviewMax}</p>}
                 <textarea id='reviewText' onChange={(e) => setReviewText(e.target.value)} value={reviewText}></textarea>
                 <div>
                     <p><span><i className={star1Class} onClick={star1Click} onMouseEnter={star1Hover} onMouseLeave={star1Leave}></i></span>

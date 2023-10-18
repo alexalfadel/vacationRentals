@@ -121,8 +121,10 @@ function SpotDetails () {
         reviewInfo = <p><span><i className="fa-solid fa-star"></i></span> New</p>
     } else {
         reviewInfo = <p><span><i className="fa-solid fa-star"></i></span> {formatRating(avgStarRating)} 
-            <span> <i className="fa-solid fa-circle"></i></span> {numReviews} {reviewInnerText}</p>
+            <span> · </span> {numReviews} {reviewInnerText}</p>
     }
+
+    // <i className="fa-solid fa-circle"></i>
 
    
     console.log(Object.values(Reviews))

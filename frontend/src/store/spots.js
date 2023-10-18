@@ -105,9 +105,9 @@ export const addReviewBySpotIdThunk = ({ review, spotId}) => async (dispatch) =>
         const newReview = await response.json();
         console.log(newReview, '---newReview from the thunk')
         return newReview;
-    } else if (response.error) {
+    } else {
         const errors = await response.json();
-        console.log(errors, '----the errors response from the tunk')
+        console.log(errors, '----the errors response from the thunk')
         return errors;
     }
 }
