@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Aleo&family=Outfit:wght@500&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Aleo&family=Outfit:wght@300;500&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -56,4 +55,19 @@
     gap: 5px;
 }
 
+.create-spot-link {
+    font-family: 'Outfit', 'sans serif';
+    text-decoration: none;
+    color: rgba(21,82,94,255);
+}
 
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bars-profile-button {
+    display: flex;
+    gap: 4px;
+}
