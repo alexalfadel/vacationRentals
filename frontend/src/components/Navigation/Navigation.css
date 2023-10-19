@@ -74,7 +74,7 @@
     gap: 4px;
 }
 
-.open-button-login {
+.open-button-loggedout {
     position: absolute;
     right: 10px;
     box-sizing: border-box;
@@ -88,7 +88,6 @@
     width: 150px;
     height: 60px;
     /* font-family: 'Outfit', 'sans serif'; */
-    font-family: 'Alumni Sans Collegiate One', sans-serif !important;
     font-size: 15px;
     font-weight: 500;
     background-color: white;
@@ -105,4 +104,72 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 3px;
+}
+
+.open-button-loggedin {
+    position: absolute;
+    right: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    /* padding-left: 8px; */
+    border: 2px solid black;
+    border-radius: 4%;
+    width: 150px;
+    height: 150px;
+    font-family: 'Outfit', 'sans serif';
+    font-size: 15px;
+    font-weight: 500;
+    background-color: white;
+    gap: 3px;
+    text-align: center;
+}
+
+.upper-text {
+    box-sizing: border-box;
+    text-align: center;
+    /* background-color: aqua; */
+    width: 100%;
+}
+
+.manage-spots-link {
+    box-sizing: border-box;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    height: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-decoration: none;
+    font-size: 15px;
+    width: 140px;
+    margin-left: 2.5px;
+    text-align: center;
+    align-self: center;
+}
+
+.manage-spots-box {
+    text-decoration: none;
+    margin-top: 4px;
+    color: black;
+}
+
+.log-out {
+    box-sizing: border-box;
+    border: 2px solid black;
+    width: 85px;
+    height: 35px;
+    border-radius: 30px;
+    font-family: 'Outfit', 'sans serif';
+    color: white;
+    background-color: rgba(102,102,102,255);
+}
+
+.log-out-box {
+    box-sizing: border-box;
+    /* background-color: aqua; */
+    display: flex;
+    justify-content: center;
+    width: 145px;
 }

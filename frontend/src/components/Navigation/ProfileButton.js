@@ -51,16 +51,16 @@ function ProfileButton({ user }) {
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
-            <li>Hello, {user.firstName}</li>
-            <li>{user.email}</li>
-            <li><Link to='/spots/current'>Manage Spots</Link></li>
-            <li>
-              <button onClick={logout}>Log Out</button>
+          <div className='open-button-loggedin'>
+            <li className='upper-text'>Hello, {user.firstName}</li>
+            <li className='upper-text'>{user.email}</li>
+            <li><Link className='manage-spots-box' to='/spots/current'><p className='manage-spots-link'>Manage Spots</p></Link></li>
+            <li className='log-out-box'>
+              <button className='log-out' onClick={logout}>Log Out</button>
             </li>
-          </>
+          </div>
         ) : (
-          <div className='open-button-login'>
+          <div className='open-button-loggedout'>
             <li>
               <OpenModalButton className='log-in-button'
                 buttonText="Log In"
