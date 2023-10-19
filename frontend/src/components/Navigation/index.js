@@ -18,6 +18,7 @@ function Navigation({ isLoaded }){
 
   return (
     <ul className='header'>
+      
       <li>
         <NavLink className='header-name' exact to="/">
           <p className='logo-link'><i className="fa-regular fa-heart" style={{color: '#e54363'}}></i> vacations</p>
@@ -31,6 +32,7 @@ function Navigation({ isLoaded }){
           </li>
         )}
       </div>
+      
     </ul>
   );
 }

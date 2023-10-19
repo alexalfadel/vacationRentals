@@ -1,5 +1,6 @@
 import React from "react";
 import { useModal } from "../../context/Modal";
+import './index.css'
 
 
 function OpenModalButton({
@@ -16,7 +17,7 @@ function OpenModalButton({
     setModalContent(modalComponent);
   };
 
-  return <button onClick={onClick}>{buttonText}</button>;
+  return <button className='modal-button-text' onClick={onClick}>{buttonText}</button>;
 }
 
 export default OpenModalButton;
