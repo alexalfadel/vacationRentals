@@ -59,6 +59,9 @@ function LoginFormModal() {
   return (
     <div className='log-in-modal'>
       <h1>Log In</h1>
+      {errors.credential && (
+          <p className='errors'>{errors.credential}</p>
+        )}
       <form onSubmit={handleSubmit}>
         <div className='input-box'>
           <label className='login-label'>
@@ -82,9 +85,9 @@ function LoginFormModal() {
             />
           
         </div>
-        {errors.credential && (
+        {/* {errors.credential && (
           <p>{errors.credential}</p>
-        )}
+        )} */}
         <button className={disabled ? 'disabled' : 'not-disabled'} disabled={disabled} type="submit">Log In</button>
       </form>
       <p className='demo-link' onClick={demoUser}>Log In as Demo User</p>
