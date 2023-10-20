@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700&display=swap');
+
+
+.new-spot-form-box {
+    box-sizing: border-box;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Outfit', 'sans serif';
+    margin-top: 15px;
+    text-align: left;
+    /* background-color: aqua; */
+}
+
+.new-spot-header-one {
+    box-sizing: border-box;
+    font-size: 35px;
+    font-weight: 500;
+    /* background-color: beige; */
+    width: 33vw;
+}
+
+.new-spot-h2 {
+    box-sizing: border-box;
+    font-size: 25px;
+    font-weight: 500;
+    margin-top: 10px;
+    width: 33vw;
+}
+
+.new-spot-header-p {
+    box-sizing: border-box;
+    font-size: 17px;
+    margin-top: 8px;
+    width: 33vw;
+    padding-bottom: 20px;
+}
+
+.new-spot-form {
+    box-sizing: border-box;
+    width: 33vw;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.wide-input-box {
+    box-sizing: border-box;
+    width: 33vw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#country, #address {
+    box-sizing: border-box;
+    width: 33vw;
+    height: 30px;
+    border: 2px solid black;
+    background-color: rgba(232,240,255,255);
+}
+
+.city-state-box, .lat-lng-box {
+    box-sizing: border-box;
+    width: 33vw;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: aqua; */
+    align-items: flex-end;
+}
+
+#city {
+    box-sizing: border-box;
+    width: 20vw;
+    border: 2px solid black;
+    background-color: rgba(232,240,255,255);
+    height: 30px;
+    
+}
+
+#state {
+    box-sizing: border-box;
+    width: 11vw;
+    border: 2px solid black;
+    background-color: rgba(232,240,255,255);
+    height: 30px;
+}
+
+.state-box, .city-box {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 4px;
+}
+
+.city-comma {
+    font-size: 30px;
+    /* background-color: green; */
+    width: 30px;
+}
+
+.lat-box, .lng-box {
+    display: flex;
+    flex-direction: column;
+    width: 16vw;
+    padding-bottom: 4px;
+}
+
+#lat, #lng {
+    border: 2px solid black;
+    background-color: rgba(232,240,255,255);
+    height: 30px;
+}
+
+.lat-comma {
+    font-size: 30px;
+    /* background-color: green; */
+    width: 12px;
+}
+
+.lat-lng-box {
+    padding-bottom: 15px;
+}
+
+.description-box {
+    box-sizing: border-box;
+    width: 33vw;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    padding-bottom: 22px;
+    border-top: 2px solid black;
+}
+
+.prompt-p {
+    box-sizing: border-box;
+    font-size: 17px;
+    margin-top: 8px;
+    width: 33vw;
+    padding-bottom: 13px;
+}
+
+#description {
+    box-sizing: border-box;
+    width: 33vw;
+    border: 2px solid black;
+    height: 125px;
+    resize: none;
+    background-color: rgba(232,240,255,255);
+}
+
+.title-box {
+    box-sizing: border-box;
+    width: 33vw;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    padding-bottom: 22px;
+    border-top: 2px solid black;
+}
+
+#name {
+    box-sizing: border-box;
+    width: 33vw;
+    border: 2px solid black;
+    background-color: rgba(232,240,255,255);
+    height: 30px;
+}
+
+.price-box {
+    box-sizing: border-box;
+    width: 33vw;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    padding-bottom: 22px;
+    border-top: 2px solid black;
+}
+
+#price {
+    box-sizing: border-box;
+    border: 2px solid black;
+    width: 31vw;
+    background-color: rgba(232,240,255,255);
+    height: 30px;
+}
+
+.dollar-sign {
+    font-size: 20px;
+    /* background-color: antiquewhite; */
+    width: 25px;
+    text-align: center;
+}
+
+.price-input-box {
+    display: flex;
+    justify-content: space-between;
+    
+    /* background-color: aqua; */
+}
+
+.images-box {
+    box-sizing: border-box;
+    width: 33vw;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+.image-input {
+    box-sizing: border-box;
+    width: 33vw;
+    border: 2px solid black;
+    background-color: rgba(232,240,255,255);
+    height: 30px;
+}
+
+.all-image-inputs {
+    box-sizing: border-box;
+    width: 33vw;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-bottom: 22px;
+}
+
+.new-spot-button {
+    box-sizing: border-box;
+    width: 11vw;
+    height: 34px;
+    align-self: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 2px solid black;
+    background-color: rgba(246,90,96,255);
+    color: white;
+    font-weight: 400;
+    font-size: 23px;
+    box-shadow: 2px 4px black;
+}
+
+#country, #address, #city, #state, #lat, #lng, #description, #name, #price, .image-input {
+    padding-left: 5px;
+    border-radius: 2px;
+}
+
+.new-spot-input-labels {
+    background-color: aqua;
+    box-sizing: border-box;
+    width: 33vw;
+    display: flex;
+    gap: 5px;
+}
+
+.city-label {
+    width: 20vw;
+    box-sizing: border-box;
+    display: flex;
+    gap: 5px 
+}
+
+.state-label {
+    width: 11vw;
+    box-sizing: border-box;
+    gap: 5px;
+    display: flex;
+}
+
+.lat-label {
+    display: flex;
+    gap: 5px;
+}
+
+.lng-label {
+    display: flex;
+    gap: 5px;
+}
