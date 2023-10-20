@@ -1,7 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700&display=swap');
+
 .spots-square {
-    
+    width: 300px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 }
 
 .hidden {
     display: none
+}
+
+.tile-box {
+    box-sizing: border-box;
+    /* background-color: aqua; */
+    width: 90vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    padding: 20px;
+}
+
+.spot-image {
+    box-sizing: border-box;
+    width: 300px;
+    height: 300px;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+.spot-location-reviews {
+    font-family: 'Outfit', 'sans serif';
+    color: black;
+    font-size: 17px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+
+.spot-tile-link {
+    text-decoration: none;
+}
+
+.spot-price {
+    font-family: 'Outfit', 'sans serif';
+    color: black;
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.price {
+    font-weight: 700;
 }

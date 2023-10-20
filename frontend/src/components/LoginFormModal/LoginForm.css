@@ -84,6 +84,10 @@ div.log-in-modal > form {
     box-shadow: 2px 4px black;
 }
 
+.not-disabled:hover {
+    cursor: pointer;
+}
+
 .demo-link {
     /* background-color: aqua; */
     font-family: 'Outfit', 'sans serif';
@@ -91,6 +95,10 @@ div.log-in-modal > form {
     text-align: center;
     text-decoration: underline !important;
     color: rgba(21,82,94,255);
+}
+
+.demo-link:hover {
+    cursor: pointer
 }
 
 .errors {

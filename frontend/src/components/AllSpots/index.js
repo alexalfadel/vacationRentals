@@ -19,6 +19,14 @@ const formatRating = (num) => {
     else return num;
 }
 
+const formatPrice = (price) => {
+    console.log(typeof price)
+    let priceString = price.toString();
+    console.log(priceString)
+    if (!priceString.includes('.')) priceString += '.00'
+    return priceString
+}
+
 
 function AllSpots () {
     const dispatch = useDispatch();
@@ -33,15 +41,15 @@ function AllSpots () {
     const loadEachSpotTile = allSpots?.map(({ id, name, city, state, price, avgRating, previewImage, description}) => {
         
         return (
-            <Link id={`spot${id}`} to={`/spots/${id}`}>
+            <Link className='spot-tile-link' id={`spot${id}`} to={`/spots/${id}`}>
                 <div className='spots-square' id={id} onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}>
-                    <img src={previewImage} alt={description}></img>
+                    <img className='spot-image' src={previewImage} alt={description}></img>
                     <p  className={ visible ? 'visible' : 'hidden'} >{name}</p>
-                    <div>
+                    <div className='spot-location-reviews'>
                         <p>{city},{state}</p>
                         <p><span><i className="fa-solid fa-star"></i></span>{formatRating(avgRating)}</p>
                     </div>
-                    <p>${price} night</p>
+                    <p className='spot-price'><span className='price'>${formatPrice(price)}</span> night</p>
                 </div>
             </Link>
             
@@ -51,9 +59,9 @@ function AllSpots () {
     if (!allSpots.length) return <h2>Loading..</h2>
 
     return (
-        <>
+        <div className='tile-box'>
             {loadEachSpotTile}
-        </>
+        </div>
     )
 }
 

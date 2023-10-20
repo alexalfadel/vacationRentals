@@ -4,3 +4,7 @@
 .modal-button-text {
     font-family: 'Outfit', sans-serif;
 }
+
+.modal-button-text:hover {
+    cursor: pointer;
+}

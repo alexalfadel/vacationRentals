@@ -61,7 +61,7 @@ function ProfileButton({ user }) {
           </div>
         ) : (
           <div className='open-button-loggedout'>
-            <li>
+            <li className='log-in-text'>
               <OpenModalButton className='log-in-button'
                 buttonText="Log In"
                 onButtonClick={closeMenu}

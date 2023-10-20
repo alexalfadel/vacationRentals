@@ -98,6 +98,10 @@
     font-family: 'Outfit', 'sans serif';
 }
 
+.log-in-text:hover {
+    cursor:pointer;
+}
+
 .full-profile {
     /* background-color: aqua; */
     display: flex;
@@ -174,3 +178,11 @@
     width: 145px;
 }
 
+.log-out:hover {
+    cursor: pointer;
+}
+
+.bars-profile-button:hover {
+    cursor: pointer;
+
+}
