@@ -1,3 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Aleo&family=Outfit:wght@300;500&display=swap');
+
 .hidden {
     display: none
+}
+
+.log-in-modal {
+    width: 425px;
+    height: 350px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+div.log-in-modal > h1 {
+    box-sizing: border-box;
+    font-size: 30px;
+    font-family: 'Outfit', 'sans serif';
+    font-weight: 400;
+    /* background-color: aqua; */
+    text-align: center;
+    margin-top: 20px;
+}
+
+div.log-in-modal > form {
+    margin-top: 15px;
+    box-sizing: border-box;
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.login-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+}
+
+.login-input {
+    box-sizing: border-box;
+    border: 2px solid black;
+    width: 400px;
+    height: 30px;
+    background-color: rgba(232,240,255,255);
+    border-radius: 2px;
+}
+
+.input-box {
+    width: 400px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    
+}
+
+.disabled {
+    box-sizing: border-box;
+    width: 400px;
+    height: 60px;
+    /* padding-bottom: 20px; */
+    margin-bottom: 20px;
+    font-family: 'Outfit', 'sans serif';
+    border: 2px solid rgba(134,134,145,255);
+    color: rgba(142,137,145,255);
+    border-radius: 2px;
+    box-shadow: 2px 4px;
+}
+
+.demo-link {
+    /* background-color: aqua; */
+    font-family: 'Outfit', 'sans serif';
+    font-size: 20px;
+    text-align: center;
+    text-decoration: underline !important;
+    color: rgba(21,82,94,255);
 }
