@@ -43,6 +43,10 @@ div.manage-spots-header > button {
     margin-bottom: 20px;
 }
 
+.manage-spots-update:hover {
+    cursor: pointer;
+}
+
 .manage-spot-tile-box {
     /* background-color: aqua; */
     box-sizing: border-box;
