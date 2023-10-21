@@ -3,7 +3,7 @@
 
 .delete-review-modal {
     box-sizing: border-box;
-    width: 30vw;
+    width: auto;
     height: 250px;
     font-family: 'Outfit', 'sans serif';
     display: flex;
@@ -11,7 +11,10 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    border: 3px solid black;
+    border: 4px solid black;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 20px;
 }
 
 div.delete-review-modal > h2 {
