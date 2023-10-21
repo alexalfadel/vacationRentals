@@ -147,6 +147,7 @@
     height: 125px;
     resize: none;
     background-color: rgba(232,240,255,255);
+    font-family: 'Outfit', 'sans serif'
 }
 
 .title-box {
@@ -247,7 +248,7 @@
 }
 
 .new-spot-input-labels {
-    background-color: aqua;
+    /* background-color: aqua; */
     box-sizing: border-box;
     width: 33vw;
     display: flex;
@@ -258,7 +259,8 @@
     width: 20vw;
     box-sizing: border-box;
     display: flex;
-    gap: 5px 
+    gap: 5px ;
+    /* background-color: aquamarine; */
 }
 
 .state-label {
@@ -276,4 +278,14 @@
 .lng-label {
     display: flex;
     gap: 5px;
+}
+
+.new-spot-errors {
+    color: rgba(254,72,86,255);
+    font-size: 13px;
+    /* background-color: aqua; */
+    margin-bottom: 0;
+    height: 20px;
+    display: flex;
+    align-items: center;
 }
