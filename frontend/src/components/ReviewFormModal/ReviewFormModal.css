@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700&display=swap');
+
+.review-form-modal {
+    width: auto;
+    box-sizing: border-box;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /* margin-left: 3px;
+    margin-right: 3px; */
+    font-family: 'Outfit', 'sans serif';
+}
+
+div.review-form-modal > form {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.review-form-h2 {
+    font-size: 30px;
+    font-weight: 400;
+}
+
+#reviewText {
+    width: 28vw;
+    box-sizing: border-box;
+    border: 2px solid black;
+    resize: none;
+    border-radius: 5px;
+    height: 100px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-family: 'Outfit', 'sans serif';
+    font-size: 15px;
+    background-color: rgba(232,240,255,255);
+    color: rgba(171,176,183,255)
+}
+
+.star-box {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    /* background-color: aqua; */
+    margin-bottom: 15px;
+    font-size: 25px;
+}
+
+button.true {
+    border: 2px solid rgba(164,164,172,255);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 3px;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 2px 3px rgba(164,164,172,255);
+    color: rgba(164,164,172,255)
+  }
+
+  button.false {
+    border: 2px solid black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 3px;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 2px 3px black;
+    color: white;
+    background-color: rgba(246,90,96,255);
+
+  }
+
+  button.true:hover, button.false:hover {
+    cursor: pointer;
+  }

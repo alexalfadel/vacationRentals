@@ -3,13 +3,14 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, Redirect } from 'react-router-dom'
 import { addReviewBySpotIdThunk, loadSpotThunk } from "../../store/spots";
+import './ReviewFormModal.css'
 
 const ReviewFormModal = ({ spotId }) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const history = useHistory();
     const [, updateState] = useState();
-    const [ reviewText, setReviewText ] = useState('Leave your review here...')
+    const [ reviewText, setReviewText ] = useState('')
     const [ stars, setStars ] = useState()
     const [ star1, setStar1 ] = useState(false);
     const [ star1Class, setStar1Class ] = useState('fa-regular fa-star');
@@ -22,6 +23,7 @@ const ReviewFormModal = ({ spotId }) => {
     const [ star4, setStar4 ] = useState(false);
     const [ star5, setStar5 ] = useState(false);
     const [ submit, setSubmit ] = useState(false)
+    const [ disabledClass, setDisabledClass ] = useState('true') 
     const [ errors, setErrors ] = useState({})
     const [ showErrors, setShowErrors ] = useState(false)
     
@@ -35,8 +37,14 @@ const ReviewFormModal = ({ spotId }) => {
     }, [reviewText])
 
     useEffect(() => {
-        if (errors.review || !stars) setSubmit(false);
-        else setSubmit(true)
+        if (errors.review || !stars) {
+            setSubmit(false);
+            setDisabledClass('true')
+        }
+        else {
+            setSubmit(true)
+            setDisabledClass('false')
+        }
     }, [stars, errors])
 
     const onSubmit = async(e) => {
@@ -77,7 +85,7 @@ const ReviewFormModal = ({ spotId }) => {
     }
 
     const reset = () => {
-        setReviewText('Leave your review here...')
+        setReviewText('')
         setStars();
         setErrors({});
         setShowErrors(false)
@@ -91,6 +99,7 @@ const ReviewFormModal = ({ spotId }) => {
         setStar3Class('fa-regular fa-star')
         setStar4Class('fa-regular fa-star')
         setStar5Class('fa-regular fa-star')
+        setDisabledClass('true')
         
     
     }
@@ -270,22 +279,22 @@ const ReviewFormModal = ({ spotId }) => {
 
     
     return (
-        <>
+        <div className='review-form-modal'>
             <form onSubmit={onSubmit}>
-                <h2>How was your stay?</h2>
+                <h2 className='review-form-h2'>How was your stay?</h2>
                 {showErrors && <p>{errors.reviewMax}</p>}
-                <textarea id='reviewText' onChange={(e) => setReviewText(e.target.value)} value={reviewText}></textarea>
-                <div>
+                <textarea placeholder='Leave your review here...' id='reviewText' onChange={(e) => setReviewText(e.target.value)} value={reviewText}></textarea>
+                <div className='star-box'>
                     <p><span><i className={star1Class} onClick={star1Click} onMouseEnter={star1Hover} onMouseLeave={star1Leave}></i></span>
                     <span><i className={star2Class} onClick={star2Click} onMouseEnter={star2Hover} onMouseLeave={star2Leave}></i></span>
                     <span><i className={star3Class} onClick={star3Click} onMouseEnter={star3Hover} onMouseLeave={star3Leave}></i></span>
                     <span><i className={star4Class} onClick={star4Click} onMouseEnter={star4Hover} onMouseLeave={star4Leave}></i></span>
                     <span><i className={star5Class} onClick={star5Click} onMouseEnter={star5Hover} onMouseLeave={star5Leave}></i></span> Stars</p>
                 </div>
-                <button disabled={submit ? false : true} >Submit your review</button>
+                <button className={disabledClass} disabled={submit ? false : true} >Submit Your Review</button>
             </form>
 
-        </>
+        </div>
     )
 }
 
