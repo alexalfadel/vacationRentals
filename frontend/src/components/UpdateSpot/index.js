@@ -16,23 +16,42 @@ function UpdateSpotForm() {
   const spot = allSpotDetails.find(
     (currSpot) => currSpot.id === Number(spotId)
   );
-  const [country, setCountry] = useState(spot.country);
-  const [address, setAddress] = useState(spot.address);
-  const [city, setCity] = useState(spot.city);
-  const [state, setState] = useState(spot.state);
-  const [lat, setLat] = useState(spot.lat);
-  const [lng, setLng] = useState(spot.lng);
-  const [description, setDescription] = useState(spot.description);
-  const [name, setName] = useState(spot.name);
-  const [price, setPrice] = useState(spot.price);
+  
+  const [country, setCountry] = useState('');
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [lat, setLat] = useState('');
+  const [lng, setLng] = useState('');
+  const [description, setDescription] = useState('');
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
   const [showErr, setShowErr] = useState(false);
   const [errors, setErrors] = useState({});
+  
 
   useEffect(() => {
     dispatch(loadAllSpotsThunk());
   }, [dispatch]);
 
   useEffect(() => {
+    if (spot) {
+      setCountry(spot.country);
+      setAddress(spot.address);
+      setCity(spot.city);
+      setState(spot.state);
+      setLat(spot.lat);
+      setLng(spot.lng);
+      setDescription(spot.description);
+      setName(spot.name);
+      setPrice(spot.price);
+    }
+  }, [spot])
+  
+
+  useEffect(() => {
+    if (spot) {
+
     const error = {};
 
     const existingName = allSpotDetails.find((spot) => spot.name === name);
@@ -55,6 +74,7 @@ function UpdateSpotForm() {
       error.name = "Name is already taken";
 
     setErrors(error);
+    }
   }, [country, address, city, state, lat, lng, description, name, price]);
 
   if (!allSpotDetails) return <h2>Loading...</h2>;
