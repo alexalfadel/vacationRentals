@@ -186,3 +186,7 @@
     cursor: pointer;
 
 }
+
+.modal-button-text-black {
+    color: black !important;
+}

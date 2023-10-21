@@ -8,6 +8,7 @@ import Review from '../Review';
 import ReviewFormModal from '../ReviewFormModal';
 import OpenModalButton from '../OpenModalButton';
 import DeleteReviewModal from '../DeleteReviewModal';
+import './SpotDetails.css'
 
 
 
@@ -107,7 +108,7 @@ function SpotDetails () {
             <>
             <Review review={review}/>
             <div className={showDelete ? 'visible' : 'hidden'}>
-                <OpenModalButton buttonText='Delete' modalComponent={<DeleteReviewModal review={review} />} />
+                <button className='delete-review-button'><OpenModalButton textColor='white' buttonText='Delete' modalComponent={<DeleteReviewModal review={review} />} /></button>
             </div>
             </>
             
@@ -121,8 +122,7 @@ function SpotDetails () {
     if (!Reviews.length) {
         reviewInfo = <p><span><i className="fa-solid fa-star"></i></span> New</p>
     } else {
-        reviewInfo = <p><span><i className="fa-solid fa-star"></i></span> {formatRating(avgStarRating)} 
-            <span> · </span> {numReviews} {reviewInnerText}</p>
+        reviewInfo = <p><span><i className="fa-solid fa-star"></i></span> {formatRating(avgStarRating)}  ·  {numReviews} {reviewInnerText}</p>
     }
 
     
@@ -135,9 +135,9 @@ function SpotDetails () {
 
 
     return (
-        <>
-            <h2>{name}</h2>
-            <p>{capitalizeWords(city)}, {capitalizeWords(state)}, {capitalizeWords(country)}</p>
+        <div className='spot-details-box'>
+            <h2 className='spot-details-name'>{name}</h2>
+            <p className='spot-details-location'>{capitalizeWords(city)}, {capitalizeWords(state)}, {capitalizeWords(country)}</p>
             <div className='spot-images-holder'>
                 {SpotImages[0] && <img id='large-image' src={SpotImages[0].url} alt={`Image of ${name}`}></img>}
                 <div id='small-images'>
@@ -149,11 +149,11 @@ function SpotDetails () {
             </div>
             <div className='spot-details-info'>
                 <div className='spot-details-description'>
-                    <p>Hosted by {firstName} {lastName}</p>
+                    <p className='spot-host'>Hosted by {firstName} {lastName}</p>
                     <p>{description}</p>
                 </div>
                 <div className='spot-details-reserve-box'>
-                    <div>
+                    <div className='reserve-box-price-reviews'>
                         <p>${price} night</p>
                         {/* <p><span><i className="fa-solid fa-star"></i></span>{numReviews}<span><i className="fa-solid fa-circle"></i></span> {numReviews} {reviewInnerText} </p> */}
                         {reviewInfo}
@@ -162,16 +162,18 @@ function SpotDetails () {
                 </div>
             </div>
             <div className='reviews-header'>
+                <div className='review-info'>
                 {reviewInfo}
+                </div>
                 <div className={!currentOwner && loggedIn && canPost ? 'visible' : 'hidden'}>
-                    <OpenModalButton buttonText='Post your review' modalComponent={<ReviewFormModal spotId={spotId} />} />
+                    <button className='post-review-button'><OpenModalButton textColor='white' buttonText='Post Your Review' modalComponent={<ReviewFormModal spotId={spotId} />} /></button>
                 </div>
                 {!Reviews.length && <p className={!currentOwner && loggedIn ? 'visible' : 'hidden'}>Be the first to post a review!</p>}
             </div>
             <div className='reviews'>
                 {reviews}
             </div>
-        </>
+        </div>
     )
 }
 

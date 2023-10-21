@@ -5,6 +5,20 @@
     font-family: 'Outfit', sans-serif;
 }
 
-.modal-button-text:hover {
+.modal-button-text-white:hover {
+    cursor: pointer;
+}
+
+.modal-button-text-white {
+    color: white;
+    font-family: 'Outfit', sans-serif;
+}
+
+.modal-button-text-black {
+    color: black;
+    font-family: 'Outfit', sans-serif;
+}
+
+.modal-button-text-black:hover {
     cursor: pointer;
 }

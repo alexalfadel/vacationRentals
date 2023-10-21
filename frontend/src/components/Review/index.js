@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
 import DeleteReviewModal from '../DeleteReviewModal';
 import OpenModalButton from '../OpenModalButton';
+import './Review.css'
 
 const formatDate = (string) => {
     const splitDate = string.split('-');
@@ -31,11 +32,11 @@ function Review({ review }) {
 
 
     return (
-        <>
+        <div className='review-box'>
             <h2>{firstName}</h2>
             <p className='date'>{date}</p>
             <p className='reviewText'>{reviewText}</p>
-        </>
+        </div>
     )
 }
 
