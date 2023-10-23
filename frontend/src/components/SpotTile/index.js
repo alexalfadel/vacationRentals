@@ -29,6 +29,8 @@ function SpotTile({ spot }) {
 
     const [ visible, setVisible ] = useState(false);
 
+    console.log(previewImage)
+
     return (
         <Link className='link-tag-spot-tile' id={`spot${id}`} to={`/spots/${id}`}>
                     <div className='spots-square' id={id} onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}>
