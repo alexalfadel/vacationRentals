@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700&display=swap');
+
+.spots-square {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.hidden {
+    display: none
+}
+
+.tile-box {
+    box-sizing: border-box;
+    /* background-color: aqua; */
+    width: 90vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    padding: 20px;
+}
+
+.spot-image {
+    box-sizing: border-box;
+    width: 300px;
+    height: 300px;
+    border: 3px solid black;
+    border-radius: 5px;
+}
+
+.spot-location-reviews {
+    font-family: 'Outfit', 'sans serif';
+    color: black;
+    font-size: 17px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+
+.spot-tile-link {
+    text-decoration: none;
+}
+
+.spot-price {
+    font-family: 'Outfit', 'sans serif';
+    color: black;
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.price {
+    font-weight: 700;
+}
+
+#tooltip {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    /* right: 20px; */
+    width: 300px;
+    height: 400px;
+    /* width: auto; */
+    /* margin: 5px; */
+    /* background-color: transparent; */
+    /* visibility: hidden; */
+    /* z-index: 5; */
+    /* background-color: aqua; */
+}
+
+span#tooltip > p {
+    background-color: rgba(102,102,102,255);
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    width: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: rgba(204,211,211,255);
+    font-weight: 200;
+    font-family: 'Outfit', 'sans serif';
+}
+
+
+#tooltip:hover {
+    visibility: visible;
+}
+
+#full-spot-box {
+    position: relative;
+    /* background-color: aquamarine; */
+}
+
+
+.link-tag-spot-tile {
+    text-decoration: none;
+}

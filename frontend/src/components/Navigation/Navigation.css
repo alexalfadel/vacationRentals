@@ -1,3 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Aleo&family=Outfit:wght@300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aleo&family=Alumni+Sans+Collegiate+One&family=Outfit:wght@300;500&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 .hidden {
-    display: none
+    display: none;
+}
+
+.header {
+    border-bottom: 2px solid rgba(213,213,213,255);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+    padding: 15px 14px;
+    /* background-color: yellow; */
+}
+
+.header-name {
+    color: rgba(254,72,86,255);
+    text-decoration: none;
+    font-size: 30px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-left: 1vw;
+    /* background-color: gray; */
+}
+
+.bars-profile-button {
+    border: 2px solid black;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 20px;
+    display: flex;
+    gap: 4px;
+    width: 76px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.create-spot-link {
+    font-family: 'Outfit', 'sans serif';
+    text-decoration: none;
+    color: rgba(21,82,94,255);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bars-profile-button {
+    display: flex;
+    gap: 4px;
+}
+
+.open-button-loggedout {
+    position: absolute;
+    right: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 8px;
+    border: 2px solid black;
+    border-radius: 4%;
+    width: 150px;
+    height: 60px;
+    font-family: 'Outfit', 'sans serif';
+    font-size: 15px;
+    font-weight: 500;
+    background-color: white;
+    z-index: 1;
+
+}
+
+.log-in-button {
+    font-family: 'Outfit', 'sans serif';
+}
+
+.log-in-text:hover {
+    cursor:pointer;
+}
+
+.full-profile {
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+}
+
+.open-button-loggedin {
+    position: absolute;
+    right: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    /* padding-left: 8px; */
+    border: 2px solid black;
+    border-radius: 4%;
+    width: 150px;
+    height: 150px;
+    font-family: 'Outfit', 'sans serif';
+    font-size: 15px;
+    font-weight: 500;
+    background-color: white;
+    gap: 3px;
+    text-align: center;
+    z-index: 1;
+}
+
+.upper-text {
+    box-sizing: border-box;
+    text-align: center;
+    /* background-color: aqua; */
+    width: 100%;
+}
+
+.manage-spots-link {
+    box-sizing: border-box;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    height: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-decoration: none;
+    font-size: 15px;
+    width: 140px;
+    margin-left: 2.5px;
+    text-align: center;
+    align-self: center;
+}
+
+.manage-spots-box {
+    text-decoration: none;
+    margin-top: 4px;
+    color: black;
+}
+
+.log-out {
+    box-sizing: border-box;
+    border: 2px solid black;
+    width: 85px;
+    height: 35px;
+    border-radius: 30px;
+    font-family: 'Outfit', 'sans serif';
+    color: white;
+    background-color: rgba(102,102,102,255);
+}
+
+.log-out-box {
+    box-sizing: border-box;
+    /* background-color: aqua; */
+    display: flex;
+    justify-content: center;
+    width: 145px;
+}
+
+.log-out:hover {
+    cursor: pointer;
+}
+
+.bars-profile-button:hover {
+    cursor: pointer;
+
+}
+
+.modal-button-text-black {
+    color: black !important;
+}
+
+.open-button-loggedin {
+    z-index: 1;
+}
+
+.open-button-loggedout {
+    z-index: 1;
 }

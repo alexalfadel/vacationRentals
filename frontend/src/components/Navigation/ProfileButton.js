@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom'
 import * as sessionActions from '../../store/session';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { useHistory } from 'react-router-dom'
+import './Navigation.css'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -35,29 +39,30 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    history.push('/')
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
-    <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+    <div className='full-profile'>
+      <button className='bars-profile-button' onClick={openMenu}>
+      <i class="fa-solid fa-bars"></i><i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={logout}>Log Out</button>
+          <div className='open-button-loggedin'>
+            <li className='upper-text'>Hello, {user.firstName}</li>
+            <li className='upper-text'>{user.email}</li>
+            <li><Link className='manage-spots-box' to='/spots/current'><p className='manage-spots-link'>Manage Spots</p></Link></li>
+            <li className='log-out-box'>
+              <button className='log-out' onClick={logout}>Log Out</button>
             </li>
-          </>
+          </div>
         ) : (
-          <>
-            <li>
-              <OpenModalButton
+          <div className='open-button-loggedout'>
+            <li className='log-in-text'>
+              <OpenModalButton  textColor='black' className='log-in-button'
                 buttonText="Log In"
                 onButtonClick={closeMenu}
                 modalComponent={<LoginFormModal />}
@@ -65,15 +70,16 @@ function ProfileButton({ user }) {
             </li>
             <li>
               <OpenModalButton
+                textColor='black'
                 buttonText="Sign Up"
                 onButtonClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
             </li>
-          </>
+          </div>
         )}
       </ul>
-    </>
+    </div>
   );
 }
 

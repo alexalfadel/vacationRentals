@@ -25,13 +25,13 @@ module.exports = {
     {
       ownerId: 1,
       address: '22 Lake Way',
-      city: 'Jonestown',
+      city: 'Lake Tahoe',
       state: 'CA',
       country: 'US',
       lat: 45.32,
       lng: 112.96,
-      name: 'Relaxing lakehouse',
-      description: 'Cozy cabin by the lake, just 10 minutes away from downtown',
+      name: 'Relaxing Lakehouse',
+      description: 'Cozy cabin by the lake, tucked away in the mountains.  Perfect for hiking and enjoying nature!',
       price: 157,
     },
     {
@@ -43,7 +43,7 @@ module.exports = {
       lat: 67.22,
       lng: 164.26,
       name: 'Scenic Cabin on the River',
-      description: 'Cabin on the river, perfect for rafting',
+      description: 'Cabin on the river, perfect for rafting.  Feel free to bring the whole family, pets included!',
       price: 253,
     },
     {
@@ -54,8 +54,8 @@ module.exports = {
       country: 'US',
       lat: 82.29,
       lng: 114.98,
-      name: 'City Condo right by Downtown',
-      description: 'Upscale condo in NYC, perfect for a weekend trip',
+      name: 'City Condo Right by Downtown',
+      description: 'Upscale condo in NYC, perfect for a weekend trip.  Close to the subway, perfect for sight seeing!',
       price: 350,
     }
    ], { validate: true })
@@ -71,7 +71,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['Relaxing lakehouse', 'Scenic Cabin on the River', 'City Condo right by Downtown']}
+      name: { [Op.in]: ['Relaxing Lakehouse', 'Scenic Cabin on the River', 'City Condo Right by Downtown']}
     }, {} );
   }
 };

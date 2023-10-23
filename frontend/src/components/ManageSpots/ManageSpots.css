@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700&display=swap');
+
+.manage-spots-container {
+    box-sizing: border-box;
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    font-family: 'Outfit', 'sans serif';
+    /* background-color: yellow; */
+}
+
+.manage-spots-header {
+    box-sizing: border-box;
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    /* background-color: aqua; */
+}
+
+div.manage-spots-header > h2 {
+    font-size: 30px;
+    margin-top: 20px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+div.manage-spots-header > button {
+    background-color: rgba(102,102,102,255);
+    color: white;
+    font-family: 'Outfit', 'sans serif';
+    border-radius: 2px;
+    box-sizing: border-box;
+    width: 150px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 2px solid black;
+    box-shadow: 2px 3px black;
+    margin-bottom: 20px;
+}
+
+.manage-spots-update:hover {
+    cursor: pointer;
+}
+
+.manage-spot-tile-box {
+    /* background-color: aqua; */
+    box-sizing: border-box;
+    width: 90vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.manage-spots-update {
+    box-sizing: border-box;
+    border: 2px solid black;
+    font-family: 'Outfit', 'sans serif';
+    font-size: 18px;
+    width: 100px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 2px;
+    box-shadow: 2px 2px black;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    background-color: rgba(102,102,102,255);
+    color: white;
+}

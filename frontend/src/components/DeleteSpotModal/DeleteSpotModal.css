@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700&display=swap');
+
+.delete-spot-modal {
+    box-sizing: border-box;
+    width: 450px;
+    height: 250px;
+    font-family: 'Outfit', 'sans serif';
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: 4px solid black;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 20px;
+}
+
+div.delete-spot-modal > h2 {
+    font-size: 30px;
+    font-weight: 400;
+}
+
+div.delete-spot-modal > p {
+    font-size: 20px;
+}
+
+.delete-spot-buttons-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 3px;
+    padding: 3px;
+    /* background-color: aqua; */
+}
+
+#delete-spot, #keep-spot {
+    box-sizing: border-box;
+    border: 2px solid black;
+    width: 26vw;
+    height: 45px;
+    box-shadow: 2px 3px black;
+}
+
+#delete-spot:hover , #keep-spot:hover {
+    cursor: pointer;
+}
+
+#keep-spot {
+    margin-bottom: 5px;
+    background-color: rgba(102,102,102,255);
+    color: white;
+}
+
+#delete-spot {
+    background-color: rgba(246,90,96,255);
+    color: white;
+}

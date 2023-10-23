@@ -1,0 +1,26 @@
+.hidden {
+    display: none
+}
+
+.review-box {
+    box-sizing: border-box;
+    /* background-color: aqua; */
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 5px;
+}
+
+div.review-box > h2 {
+    font-size: 20px;
+}
+
+div.review-box > .date {
+    font-size: 17px;
+    color: rgba(189,188,190,255)
+}
+
+div.review-box > .reviewText {
+    font-size: 15px;
+}

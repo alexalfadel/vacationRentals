@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Aleo&family=Alumni+Sans+Collegiate+One&family=Outfit:wght@300;500&display=swap');
+
+
+.modal-button-text {
+    font-family: 'Outfit', sans-serif;
+}
+
+.modal-button-text-white:hover {
+    cursor: pointer;
+}
+
+.modal-button-text-white {
+    color: white;
+    font-family: 'Outfit', sans-serif;
+}
+
+.modal-button-text-black {
+    color: black;
+    font-family: 'Outfit', sans-serif;
+}
+
+.modal-button-text-black:hover {
+    cursor: pointer;
+}
