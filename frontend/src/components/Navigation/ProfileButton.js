@@ -70,6 +70,7 @@ function ProfileButton({ user }) {
             </li>
             <li>
               <OpenModalButton
+                textColor='black'
                 buttonText="Sign Up"
                 onButtonClick={closeMenu}
                 modalComponent={<SignupFormModal />}
