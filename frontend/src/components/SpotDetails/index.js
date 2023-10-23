@@ -133,6 +133,11 @@ function SpotDetails () {
         alert('Feature Coming Soon...')
     }
 
+    console.log(SpotImages[0]?.url);
+    console.log(SpotImages[1]?.url);
+    console.log(SpotImages[2]?.url);
+    console.log(SpotImages[3]?.url);
+    console.log(SpotImages[4]?.url);
 
     return (
         <div className='spot-details-box'>
