@@ -80,12 +80,12 @@ export const addImageToSpotThunk = (payload) => async (dispatch) => {
         },
         body: JSON.stringify(image)
     }
-    const response = await csrfFetch(`/api/spots/${spotId}/images`, fetchOptions);
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, fetchOptions).catch((error) =>  error);
     
     if (response.ok) {
         // console.log('adding image')
         dispatch(loadAllSpotsThunk());
-    }
+    } else return response
 }
 
 export const addReviewBySpotIdThunk = ({ review, spotId}) => async (dispatch) => {

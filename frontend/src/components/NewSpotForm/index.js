@@ -6,16 +6,6 @@ import { addImageToSpotThunk } from '../../store/spots'
 import { loadAllSpotsThunk } from '../../store/spots'
 import './NewSpotForm.css'
 
-// const invalidPrice = (str) => {
-//     if (isNaN(Number(str))) return true
-//     else if (str.length === 0) return true
-//     else return false
-// }
-
-const getRandomNumber = () => {
-    const newNum =  Math.floor(Math.random() * 10000000);
-    return newNum
-}
 
 
 
@@ -26,10 +16,6 @@ const validImage = (str) => {
     else return false;
 }
 
-// const imageName = (str, spotId) => {
-//     const splitImage = str.split('.');
-//     return `${spotId}-image-${getRandomNumber()}.${splitImage[splitImage.length - 1]}`
-// }
 
 function NewSpotForm() {
     const dispatch = useDispatch();
@@ -56,7 +42,7 @@ function NewSpotForm() {
     // console.log(validPrice('Price per night (USD)'))
 
     useEffect(() => {
-        dispatch(loadAllSpotsThunk)
+        dispatch(loadAllSpotsThunk())
     }, [dispatch])
 
     useEffect(() => {
@@ -78,10 +64,10 @@ function NewSpotForm() {
         if (price < 1 || price > 30000) error.price = 'Price is required';
         if (!previewImage.length || previewImage === 'Preview Image URL') error.prevImage = 'Preview image is required'
         // if (!validImage(previewImage)) error.prevImage = ('Image URL must end in .png, .jpg, or .jpeg')
-        if (!validImage(image2)) error.image2 = 'Image URL must end in .png, .jpg, or .jpeg'
-        if (!validImage(image3)) error.image3 = 'Image URL must end in .png, .jpg, or .jpeg'
-        if (!validImage(image4)) error.image4 = 'Image URL must end in .png, .jpg, or .jpeg'
-        if (!validImage(image5)) error.image5 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (!validImage(image2) && image2.length) error.image2 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (!validImage(image3) && image3.length) error.image3 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (!validImage(image4) && image4.length) error.image4 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (!validImage(image5) && image5.length) error.image5 = 'Image URL must end in .png, .jpg, or .jpeg'
 
 
 
@@ -91,7 +77,7 @@ function NewSpotForm() {
 
     }, [country, address, city, state, lat, lng, description, name, price, previewImage, image2, image3, image4, image5])
 
-    
+    console.log(allSpots)
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -114,6 +100,8 @@ function NewSpotForm() {
             }
 
             newForm = await dispatch(createASpotThunk(payload))
+
+            console.log(newForm)
 
             if (newForm.id) {
 
@@ -180,10 +168,10 @@ function NewSpotForm() {
         setName('')
         setPrice('')
         setPreviewImage('')
-        setImage2('Image URL')
-        setImage3('Image URL')
-        setImage4('Image URL')
-        setImage5('Image URL')
+        setImage2('')
+        setImage3('')
+        setImage4('')
+        setImage5('')
         setErrors({})
         setShowErr(false)
         // setSubmit(false)
