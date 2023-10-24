@@ -198,7 +198,7 @@ function SpotDetails() {
           <p className="spot-host">
             Hosted by {firstName} {lastName}
           </p>
-          <p>{description}</p>
+          <p id='spot-description'>{description}</p>
         </div>
         <div className="spot-details-reserve-box">
           <div className="reserve-box-price-reviews">

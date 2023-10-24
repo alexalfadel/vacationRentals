@@ -20,7 +20,7 @@ function SignupFormModal() {
   const { closeModal } = useModal();
 
   useEffect(() => {
-    if (!email.length || username.length < 4 || password.length < 6 || !firstName.length || !lastName.length, confirmPassword.length < 6) setDisabled(true)
+    if (!email.length || username.length < 4 || password.length < 6 || !firstName.length || !lastName.length || confirmPassword.length < 6) setDisabled(true)
     else setDisabled(false)
   }, [email, username, firstName, lastName, password, confirmPassword])
 
@@ -45,11 +45,12 @@ function SignupFormModal() {
           }
         });
         history.push('/')
-    }
+    } else {
     return setErrors({
       ...errors,
       confirmPassword: "Confirm Password field must be the same as the Password field"
     });
+  }
   };
 
   return (
