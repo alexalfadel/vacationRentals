@@ -200,3 +200,7 @@
 .open-button-loggedout {
     z-index: 1;
 }
+
+div.full-profile > ul {
+    list-style-type: none;
+}
