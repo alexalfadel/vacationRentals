@@ -23,10 +23,12 @@ const capitalizeWords = (str) => {
 
 const formatRating = (num) => {
   const nums = [1, 2, 3, 4, 5];
+ 
   if (num) {
     if (nums.includes(num)) return `${num}.0`;
-    if (num.toString().length > 3) {
-      return num.toFixed(2);
+    else if (num.toString().length >= 3 ) {
+
+      return num.toFixed(1);
     }
   } else return num;
 };
@@ -51,6 +53,7 @@ function SpotDetails() {
 
   if (!spotDetails || !spotDetails.Owner) return <h2>Loading...</h2>;
 
+
   const loggedIn = user ? true : false;
 
   const {
@@ -67,6 +70,8 @@ function SpotDetails() {
     SpotImages,
     ownerId,
   } = spotDetails;
+
+  
 
   const { firstName, lastName } = Owner;
 
@@ -93,10 +98,7 @@ function SpotDetails() {
     return 0;
   });
 
-  // let showDelete;
-  // if (loggedIn) {
-
-  // }
+  
 
   const reviews = Reviews.map((review) => {
     let showDelete;
