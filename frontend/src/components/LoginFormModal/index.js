@@ -19,6 +19,7 @@ function LoginFormModal() {
   }, [credential, password]);
 
   console.log(errors, '----errors')
+  console.log(errors.message, '---errors.message')
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,6 +28,7 @@ function LoginFormModal() {
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
+        console.log(data, '---data');
         if (data && data.errors) {
           setErrors(data.errors);
         }
@@ -42,7 +44,6 @@ function LoginFormModal() {
       })
     ).catch(async (res) => {
       const data = await res.json();
-
       return false;
     });
 
