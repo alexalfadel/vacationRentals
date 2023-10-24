@@ -152,10 +152,16 @@ const ReviewFormModal = ({ spotId }) => {
 
     const star1Hover = () => {
         setStar1Class('fa-solid fa-star')
+
     }
 
     const star1Leave = () => {
-        setStar1Class('fa-regular fa-star')
+
+        if (star1 ) {
+            setStar1Class('fa-solid fa-star')
+
+        }
+        else if (!star1) setStar1Class('fa-regular fa-star')
     }
 
     const star2Hover = () => {
@@ -180,8 +186,8 @@ const ReviewFormModal = ({ spotId }) => {
         } 
 
         if (!star2) setStar2Class('fa-regular fa-star')
-        // if (!star1) setStar2Class('fa-regular fa-star')
         if (!star1) setStar1Class('fa-regular fa-star')
+        // if (!star1) setStar1Class('fa-regular fa-star')
 
     }
 
