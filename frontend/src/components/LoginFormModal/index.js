@@ -26,9 +26,7 @@ function LoginFormModal() {
     return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(async (res) => {
-        console.log('we have an error and are in the catch')
         const data = await res.json();
-        console.log(data, '----data (before if statement)')
         if (data && data.errors) {
           setErrors(data.errors);
         }
@@ -66,6 +64,7 @@ function LoginFormModal() {
     <div className="log-in-modal">
       <h1>Log In</h1>
       {errors.credential && <p className="errors">{errors.credential}</p>}
+      {errors.message && <p className='errors'>{errors.message}</p>}
       <form onSubmit={handleSubmit}>
         <div className="input-box">
           <label className="login-label">Username or Email</label>
