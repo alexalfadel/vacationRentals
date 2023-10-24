@@ -517,7 +517,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         }
     })
 
-    // console.log(currentBookingsStartDate, '!!!currentBookignsStartDate')
+
 
     if (currentBookingsStartDate.length) {
         dateError.errors.startDate = "Start date conflicts with an existing booking"
@@ -660,7 +660,7 @@ router.post('/:spotId/images', requireAuth, async (req, res,) => {
             await spotPreviewImage.save();
         }
 
-        console.log(spotPreviewImage)
+        
     }
     
     const newSpotImage = await SpotImage.create({
