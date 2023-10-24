@@ -18,13 +18,17 @@ function LoginFormModal() {
     else setDisabled(true);
   }, [credential, password]);
 
+  console.log(errors, '----errors')
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
     return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(async (res) => {
+        console.log('we have an error and are in the catch')
         const data = await res.json();
+        console.log(data, '----data (before if statement)')
         if (data && data.errors) {
           setErrors(data.errors);
         }
