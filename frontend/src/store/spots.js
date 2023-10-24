@@ -55,13 +55,17 @@ export const createASpotThunk = (payload) => async (dispatch) => {
     },
     body: JSON.stringify(payload),
   };
-  const response = await csrfFetch("/api/spots", fetchOptions);
+  const response = await csrfFetch("/api/spots", fetchOptions).catch(error => error);
 
   if (response.ok) {
     const newSpot = await response.json();
     dispatch(loadAllSpotsThunk());
     return newSpot;
-  } else return false;
+  } else {
+    const errors = await response.json();
+    console.log('we are getting an error')
+    return errors;
+  };
 };
 
 export const addImageToSpotThunk = (payload) => async (dispatch) => {

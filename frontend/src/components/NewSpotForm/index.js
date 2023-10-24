@@ -46,10 +46,14 @@ function NewSpotForm() {
 
     if (!country.length || country === "Country")
       error.country = "Country is required";
+    if (country.length > 56) error.country = 'Country name must be less than 56 characters'
     if (!address.length || address === "Address")
       error.address = "Address is required";
+    if (address.length > 200) error.address = 'Address must be less than 100 characters'
     if (!city.length || city === "City") error.city = "City is required";
+    if (city.length > 187) error.city = 'City must be less than 187 characters'
     if (!state.length || state === "State") error.state = "State is required";
+    if (state.length > 50) error.state = 'State must be less than 50 characters';
     if (!lat.length || lat === "Latitude") error.lat = "Latitude is required";
     if (Number(lat) > 90 || Number(lat) < -90)
       error.lat = "Latitude must be in valid range";
@@ -61,13 +65,15 @@ function NewSpotForm() {
       description === "Please write at least 30 characters"
     )
       error.description = "Description needs a minimum of 30 characters";
+    if (description.length > 256) error.description = 'Description must be less than 1000 characters.'
     if (!name.length || name === "Name of your spot")
       error.name = "Name is required";
     if (existingName) error.name = "Spot name is already taken";
-    if (price < 1 || price > 30000) error.price = "Price is required";
-    if (!previewImage.length || previewImage === "Preview Image URL")
-      error.prevImage = "Preview image is required";
-
+    if (name.length > 50) error.name = "Spot name must be less than 50 characters"
+    if (price < 1 || price > 30000) error.price = "Price must be between $1.00 and $30,000";
+    if (!price) error.price = "Price is required";
+    if (!previewImage.length || previewImage === "Preview Image URL") error.prevImage = "Preview image is required";
+      if (!validImage(previewImage)) errors.prevImage = 'Preview Image URL must end in .png, .jpg. or .jpeg'
     if (!validImage(image2) && image2.length)
       error.image2 = "Image URL must end in .png, .jpg, or .jpeg";
     if (!validImage(image3) && image3.length)
@@ -115,7 +121,7 @@ function NewSpotForm() {
         price: Number(price),
       };
 
-      newForm = await dispatch(createASpotThunk(payload));
+      newForm = await dispatch(createASpotThunk(payload)).catch((error) => error);
 
       if (newForm.id) {
         const prevImage = {
@@ -152,6 +158,12 @@ function NewSpotForm() {
         await dispatch(loadAllSpotsThunk());
         history.push(`/spots/${newForm.id}`);
         reset();
+      } else {
+        console.log(newForm);
+        if (newForm.errors.address) errors.address = newForm.errors.address
+        if (newForm.errors.lat) errors.lat = newForm.errors.lat
+        if (newForm.errors.lng) errors.lng = newForm.errors.lat
+        setShowErr(true)
       }
     }
   };
@@ -263,7 +275,7 @@ function NewSpotForm() {
             <input
               placeholder="Latitude"
               id="lat"
-              type="text"
+              type="number"
               onChange={(e) => setLat(e.target.value)}
               value={lat}
             ></input>
@@ -280,7 +292,7 @@ function NewSpotForm() {
             <input
               placeholder="Longitude"
               id="lng"
-              type="text"
+              type="number"
               onChange={(e) => setLng(e.target.value)}
               value={lng}
             ></input>

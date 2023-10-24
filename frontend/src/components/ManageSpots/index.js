@@ -42,6 +42,7 @@ function ManageSpots() {
 
   const loadEachSpotTile = currentSpots?.map(
     ({ id, city, state, price, avgRating, previewImage, description }) => {
+      
       return (
         // <Link id={`spot${id}`} to={`/spots/${id}`}>
         <div className="spots-square" id={id}>
@@ -59,7 +60,7 @@ function ManageSpots() {
                 <span>
                   <i className="fa-solid fa-star"></i>
                 </span>
-                {avgRating}
+                { avgRating === 'No reviews yet' ? 'New' : {avgRating}}
               </p>
             </div>
             <p className="spot-price">
