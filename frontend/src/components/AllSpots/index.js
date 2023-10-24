@@ -17,32 +17,7 @@ function AllSpots () {
         dispatch(loadAllSpotsThunk())
     }, [dispatch])
 
-    // let loadEachSpotTile;
-
-    // useEffect(() => {
-    //     console.log('use effect rendering')
-    //     loadEachSpotTile = allSpots?.map(({ id, name, city, state, price, avgRating, previewImage, description}) => {
-        
-    //         return (
-    //             // <div className='full-spot-box'>
-    //                 <Link className='spot-tile-link' id={`spot${id}`} to={`/spots/${id}`}>
-    //                     <div className='spots-square' id={id} onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}>
-    //                         <img className='spot-image' src={previewImage} alt={description}></img>
-    //                         {/* <div><ToolTip name={name}/></div> */}
-    //                         <div className='spot-location-reviews'>
-    //                             <p>{city},{state}</p>
-    //                             <p><span><i className="fa-solid fa-star"></i></span>{formatRating(avgRating)}</p>
-    //                         </div>
-    //                         <p className='spot-price'><span className='price'>${formatPrice(price)}</span> night</p>
-    //                         <span id="tooltip" className={visible ? 'visible' : 'hidden'} onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}><p>{name}</p></span>
-    //                     </div>
-                        
-    //                 </Link>
-                    
-                
-    //         )
-    //     })
-    // }, [visible, allSpots])
+    
 
     
 

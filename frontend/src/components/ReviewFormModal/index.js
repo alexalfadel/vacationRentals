@@ -66,20 +66,17 @@ const ReviewFormModal = ({ spotId }) => {
 
         const newReview = await dispatch(addReviewBySpotIdThunk(payload)).catch(async (errors) => await errors.json())
 
-        console.log(newReview, '----newReview after thunk in componenet before if statements')
 
 
         if (newReview.id) {
-            console.log('right before the redirect...')
+            
             closeModal();
             history.push(`/spots/${spotId}`);
             dispatch(loadSpotThunk(spotId))
         } else if (newReview.errors) {
-            console.log(newReview, '-----newReview')
-            console.log(newReview.errors, '------newReview.errror')
-            // setErrors(newReview.errors.review)
+      
             setShowErrors(true)
-            console.log(errors, '----errors')
+   
         }
         
     }
@@ -112,7 +109,7 @@ const ReviewFormModal = ({ spotId }) => {
     }
 
     const star1Click = () => {
-        console.log('star 1 clicked')
+        
         if (!star1) {
             setStar1(true)
             setStar1Class("fa-solid fa-star");
@@ -134,7 +131,7 @@ const ReviewFormModal = ({ spotId }) => {
     }
 
     const star2Click = () => {
-        console.log('star 2 clicked')
+      
         if (!star1 && !star2) {
             setStar1(true)
             setStar2(true)

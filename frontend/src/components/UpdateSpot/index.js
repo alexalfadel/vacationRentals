@@ -16,19 +16,18 @@ function UpdateSpotForm() {
   const spot = allSpotDetails.find(
     (currSpot) => currSpot.id === Number(spotId)
   );
-  
-  const [country, setCountry] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [lat, setLat] = useState('');
-  const [lng, setLng] = useState('');
-  const [description, setDescription] = useState('');
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
+
+  const [country, setCountry] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [lat, setLat] = useState("");
+  const [lng, setLng] = useState("");
+  const [description, setDescription] = useState("");
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
   const [showErr, setShowErr] = useState(false);
   const [errors, setErrors] = useState({});
-  
 
   useEffect(() => {
     dispatch(loadAllSpotsThunk());
@@ -46,53 +45,44 @@ function UpdateSpotForm() {
       setName(spot.name);
       setPrice(spot.price);
     }
-  }, [spot])
-  
+  }, [spot]);
 
   useEffect(() => {
     if (spot) {
+      const error = {};
 
-    const error = {};
+      const existingName = allSpotDetails.find((spot) => spot.name === name);
+      const originalName = spot.name;
 
-    const existingName = allSpotDetails.find((spot) => spot.name === name);
-    const originalName = spot.name;
+      if (!country.length) error.country = "Country is required";
+      if (!address.length) error.address = "Address is required";
+      if (!city.length) error.city = "City is required";
+      if (!state.length) error.state = "State is required";
+      if (!lat) error.lat = "Latitude is required";
+      if (Number(lat) > 90 || Number(lat) < -90)
+        error.lat = "Latitude must be in valid range";
+      if (Number(lng) > 180 || Number(lng) < -180)
+        error.lng = "Longitude must be in valid range";
+      if (!lng) error.lng = "Longitude is required";
+      if (description.length < 30)
+        error.description = "Description needs a minimum of 30 characters";
+      if (!name.length) error.name = "Name is required";
+      if (existingName && name !== originalName)
+        error.name = "Name is already taken";
 
-    if (!country.length) error.country = "Country is required";
-    if (!address.length) error.address = "Address is required";
-    if (!city.length) error.city = "City is required";
-    if (!state.length) error.state = "State is required";
-    if (!lat) error.lat = "Latitude is required";
-    if (Number(lat) > 90 || Number(lat) < -90)
-      error.lat = "Latitude must be in valid range";
-    if (Number(lng) > 180 || Number(lng) < -180)
-      error.lng = "Longitude must be in valid range";
-    if (!lng) error.lng = "Longitude is required";
-    if (description.length < 30)
-      error.description = "Description needs a minimum of 30 characters";
-    if (!name.length) error.name = "Name is required";
-    if (existingName && name !== originalName)
-      error.name = "Name is already taken";
-
-    setErrors(error);
+      setErrors(error);
     }
   }, [country, address, city, state, lat, lng, description, name, price]);
 
   if (!allSpotDetails) return <h2>Loading...</h2>;
 
-  // console.log()
-
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    // console.log(typeof lat, lat, '---this is lat and typeof lat')
-
-    console.log("---we are in onSubmit");
     let newForm;
 
     if (Object.values(errors).length) {
       setShowErr(true);
-      console.log("---we have errors");
-      console.log(errors);
     } else {
       const spotData = {
         address,
@@ -111,8 +101,6 @@ function UpdateSpotForm() {
         spotData,
       };
 
-      console.log("about to dispatch updateSpot thunk from component");
-
       newForm = await dispatch(updateSpotThunk(payload));
 
       if (newForm.id) {
@@ -120,8 +108,6 @@ function UpdateSpotForm() {
         // await dispatch(loadAllSpotsThunk())
 
         reset();
-      } else {
-        console.log(newForm);
       }
     }
   };
