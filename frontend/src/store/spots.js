@@ -63,7 +63,6 @@ export const createASpotThunk = (payload) => async (dispatch) => {
     return newSpot;
   } else {
     const errors = await response.json();
-    console.log('we are getting an error')
     return errors;
   };
 };

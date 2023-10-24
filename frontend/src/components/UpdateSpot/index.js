@@ -282,7 +282,7 @@ function UpdateSpotForm() {
           </div>
           {showErr && <p>{errors.price}</p>}
         </div>
-        <button className="update-spot-button">Create Spot</button>
+        <button className="update-spot-button">Update your Spot</button>
       </form>
     </div>
   );
