@@ -25,6 +25,29 @@ function SpotTile({ spot }) {
 
   const [visible, setVisible] = useState(false);
 
+  let reviewInfo;
+
+
+  if (!avgRating) {
+    reviewInfo = (
+      <p>
+        <span>
+          <i className="fa-solid fa-star"></i>
+        </span>{" "}
+        New
+      </p>
+    );
+  } else {
+    reviewInfo = (
+      <p>
+        <span>
+          <i className="fa-solid fa-star"></i>
+        </span>{" "}
+        {formatRating(avgRating)}
+      </p>
+    );
+  }
+
   return (
     <Link className="link-tag-spot-tile" id={`spot${id}`} to={`/spots/${id}`}>
       <div
@@ -40,10 +63,7 @@ function SpotTile({ spot }) {
             {city}, {state}
           </p>
           <p>
-            <span>
-              <i className="fa-solid fa-star"></i>
-            </span>
-            {formatRating(avgRating)}
+            {reviewInfo}
           </p>
         </div>
         <p className="spot-price">
