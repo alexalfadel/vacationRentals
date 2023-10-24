@@ -150,7 +150,6 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         }
     })
 
-    // console.log(currentBookingsStartDate, '!!!currentBookignsStartDate')
 
     if (newEndDate < today) {
         dateError.message = 'Sorry, you cannot book for the past'

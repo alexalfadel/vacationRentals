@@ -59,7 +59,7 @@ router.get('/current', requireAuth, async (req, res) => {
         }
     })
 
-    console.log(userReviews)
+
 
     const reviewRes = {
         Reviews: [],
@@ -97,11 +97,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
         // let allReviewImages = [];
 
-        // for (let i = 0; i < reviewImages.length; i++) {
-
-        // }
-
-        // console.log(userObj)
+       
 
         const reviewObj = {
             ...review,
