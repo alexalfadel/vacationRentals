@@ -60,7 +60,7 @@ function ManageSpots() {
                 <span>
                   <i className="fa-solid fa-star"></i>
                 </span>
-                { avgRating === 'No reviews yet' ? 'New' : {avgRating}}
+                { avgRating === 'No reviews yet' ? 'New' : avgRating}
               </p>
             </div>
             <p className="spot-price">
