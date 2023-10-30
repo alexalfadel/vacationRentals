@@ -7,10 +7,18 @@
 Vacation rentals is a market place where you can list your property to be rented, or rent spots yourself for an upcoming vacation.  Users can sign up, log in, create spots, update spots, and post reviews.
 
 ## Technologies Uses
-*React/Redux
-*Express
-*SQL
-*Javascript
+* React/Redux
+* Express
+* SQL
+* Javascript
 
 ## How to Launch
 You can launch locally by running 'npm start' in the backend folder, and 'npm start' in the front end folder.
+
+## Link to live site
+https://vacation-rentals.onrender.com/
+
+## Upcoming features
+* Reserve a spot
+* Update a review
+* Add review images
